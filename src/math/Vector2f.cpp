@@ -2,6 +2,8 @@
 // Created by Daan on 05/11/2018.
 //
 
+#include <math/Vector2f.h>
+
 #include "../../include/math/Vector2f.h"
 
 math::Vector2f::Vector2f() {
@@ -37,3 +39,7 @@ math::Vector2f math::Vector2f::operator-(const math::Vector2f other) {
     vector.x = this->x - other.x;
     vector.y = this->y - other.y;
     return vector;}
+
+void math::Vector2f::draw(ui::sdl::Frame& frame) {
+    frame.draw_rectangle(10, 10, 10, 10);
+}
