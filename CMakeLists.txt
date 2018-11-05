@@ -9,5 +9,5 @@ set(SDL2_PATH "C:/SDL2")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-add_executable(RDAlgebra2 main.cpp)
+add_executable(RDAlgebra2 main.cpp src/math/Vector2f.cpp include/math/Vector2f.h)
 target_link_libraries(${CMAKE_PROJECT_NAME} ${SDL2_LIBRARY})
