@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Daan/CLionProjects/RDAlgebra2/main.cpp
+iostream
+-
+SDL2/SDL.h
+-
+stdio.h
+-
+

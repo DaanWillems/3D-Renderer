@@ -57,6 +57,7 @@ include CMakeFiles/RDAlgebra2.dir/progress.make
 include CMakeFiles/RDAlgebra2.dir/flags.make
 
 CMakeFiles/RDAlgebra2.dir/main.cpp.obj: CMakeFiles/RDAlgebra2.dir/flags.make
+CMakeFiles/RDAlgebra2.dir/main.cpp.obj: CMakeFiles/RDAlgebra2.dir/includes_CXX.rsp
 CMakeFiles/RDAlgebra2.dir/main.cpp.obj: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Daan\CLionProjects\RDAlgebra2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/RDAlgebra2.dir/main.cpp.obj"
 	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\RDAlgebra2.dir\main.cpp.obj -c C:\Users\Daan\CLionProjects\RDAlgebra2\main.cpp
@@ -78,6 +79,8 @@ RDAlgebra2_EXTERNAL_OBJECTS =
 
 RDAlgebra2.exe: CMakeFiles/RDAlgebra2.dir/main.cpp.obj
 RDAlgebra2.exe: CMakeFiles/RDAlgebra2.dir/build.make
+RDAlgebra2.exe: C:/MinGW/lib/libSDL2main.a
+RDAlgebra2.exe: C:/MinGW/lib/libSDL2.dll.a
 RDAlgebra2.exe: CMakeFiles/RDAlgebra2.dir/linklibs.rsp
 RDAlgebra2.exe: CMakeFiles/RDAlgebra2.dir/objects1.rsp
 RDAlgebra2.exe: CMakeFiles/RDAlgebra2.dir/link.txt
