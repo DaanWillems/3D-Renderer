@@ -12,18 +12,23 @@ namespace math {
 class Vector2f: public ui::Renderable {
     public:
         Vector2f();
-        Vector2f(int x, int y);
+        Vector2f(float x, float y);
 
         Vector2f add(Vector2f vector);
         Vector2f substract(Vector2f vector);
 
         Vector2f operator+(const Vector2f other);
         Vector2f operator-(const Vector2f other);
+        Vector2f operator*(const float scale);
+
+        Vector2f operator+=(const Vector2f other);
+        Vector2f operator-=(const Vector2f other);
+        Vector2f operator*=(const float scale);
 
         void draw(ui::sdl::Frame& frame) override;
 
-        int x;
-        int y;
+        float x;
+        float y;
     };
 }
 

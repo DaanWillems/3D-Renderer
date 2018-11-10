@@ -9,12 +9,13 @@
 #include <ui/sdl/Frame.h>
 
 ui::Renderer::Renderer(sdl::Window window) {
-    frame = sdl::Frame(window.gWindow);
+    frame = sdl::Frame(window.gWindow, 640, 640);
 }
 
 void ui::Renderer::render(Scene& scene) {
+    frame.clear();
     for(auto renderable : scene.renderables) {
         renderable->draw(frame);
     }
-
+    frame.swap();
 }

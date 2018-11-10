@@ -5,14 +5,15 @@
 #ifndef RDALGEBRA2_GRID_H
 #define RDALGEBRA2_GRID_H
 
-
+#include <ui/Renderable.h>
+#include <ui/sdl/Frame.h>
 #include <vector>
 #include "Vector2f.h"
 
 namespace math {
-    class Grid {
+class Grid: public ui::Renderable {
     public:
-        std::vector<Vector2f> vectors;
+        void draw(ui::sdl::Frame& frame) override;
     };
 }
 
