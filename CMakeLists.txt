@@ -9,5 +9,5 @@ set(SDL2_PATH "C:/SDL2")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR} include)
 
-add_executable(RDAlgebra2 main.cpp src/math/Vector2f.cpp include/math/Vector2f.h src/math/Grid.cpp include/math/Grid.h src/ui/Renderer.cpp include/ui/Renderer.h include/ui/Renderable.h src/ui/Scene.cpp include/ui/Scene.h include/ui/VectorRenderable.h src/ui/sdl/Window.cpp include/ui/sdl/Window.h src/ui/sdl/Frame.cpp include/ui/sdl/Frame.h include/ui/GridRenderable.h)
+add_executable(RDAlgebra2 main.cpp src/math/Vector2f.cpp include/math/Vector2f.h src/math/Grid.cpp include/math/Grid.h src/ui/Renderer.cpp include/ui/Renderer.h include/ui/Renderable.h src/ui/Scene.cpp include/ui/Scene.h include/ui/VectorRenderable.h src/ui/sdl/Window.cpp include/ui/sdl/Window.h src/ui/sdl/Frame.cpp include/ui/sdl/Frame.h include/ui/GridRenderable.h include/math/Matrix.h src/math/Matrix.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME} ${SDL2_LIBRARY})

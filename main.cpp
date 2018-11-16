@@ -5,6 +5,7 @@
 #include <ui/Renderer.h>
 #include <math/Vector2f.h>
 #include <math/Grid.h>
+#include <math/Matrix.h>
 
 #ifdef main
 #undef main
@@ -41,6 +42,11 @@ int main(int argc, char *argv[]) {
     scene.renderables.push_back(dynamic_cast<Renderable*>(&vector2));
     scene.renderables.push_back(dynamic_cast<Renderable*>(&vector3));
     scene.renderables.push_back(dynamic_cast<Renderable*>(&grid));
+
+    Matrix<int, 3, 2> test;
+    Matrix<int, 2, 3> test2;
+
+    auto tests = multiply(test, test2);
 
     while(!window.shouldClose()) {
         renderer.render(scene);
