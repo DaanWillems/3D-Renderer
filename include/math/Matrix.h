@@ -21,7 +21,7 @@ namespace math {
 
         void translate(math::Vector& other);
         void scale(math::Vector other);
-        void rotate(math::Vector other);
+        void rotate(float angle);
         void invert();
 
         Matrix operator+(const Matrix &other) const;

@@ -47,18 +47,20 @@ int main(int argc, char *argv[]) {
     Renderer renderer{window};
     Scene scene{};
 
-    math::Matrix matrix{3, 3, 1.f};
-    auto vectorTranslate = math::Vector{20.f, 20.f};
+    math::Matrix matrix{3, 3, 0.f};
+    auto vectorTranslate = math::Vector{25.f, 25.f};
+    auto vectorScale = math::Vector{2.f, 2.f};
+
     matrix.translate(vectorTranslate);
+    matrix.rotate(90);
+    //matrix.scale(vectorScale);
+    std::cout << matrix.toString() << std::endl;
 
-    auto vectorScale = math::Vector{10.f, 10.f};
-    matrix.scale(vectorScale);
-
-    math::Vector vector1{-4, -4, 1};
-    math::Vector vector2{4, -4, 1};
-    math::Vector vector3{4, 4, 1};
-    math::Vector vector4{-4, 4, 1};
-    math::Vector vector5{-4, -4, 1};
+    math::Vector vector1{-20, -20, 1};
+    math::Vector vector2{20, -20, 1};
+    math::Vector vector3{20, 20, 1};
+    math::Vector vector4{-20, 20, 1};
+    math::Vector vector5{-20, -20, 1};
 
     Shape shape;
     shape.points.push_back(vector1);
@@ -76,6 +78,8 @@ int main(int argc, char *argv[]) {
 
     while(!window.shouldClose()) {
         renderer.render(scene);
+        matrix.rotate(0.01);
+        shape.multiply(matrix);
     }
 
     return 0;

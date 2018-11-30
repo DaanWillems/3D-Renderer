@@ -1,5 +1,6 @@
 
 #include <math/Matrix.h>
+#include <math.h>
 #include <iostream>
 
 namespace math {
@@ -35,7 +36,30 @@ namespace math {
     }
 
 
-    void Matrix::rotate(math::Vector other) {
+    void Matrix::rotate(float angle) {
+        Vector test{data[0][columns-1], data[1][columns-1]};
+        test.invert();
+        translate(test);
+
+        std::cout << toString() << std::endl;
+
+        if(this->rows != 3 || this->columns != 3) {
+            throw std::runtime_error("Invalid matrix rotation");
+        }
+
+        angle = (angle * M_PI) / 180;
+        float a = cos(angle);
+
+        data[0][0] += cos(angle);
+        data[0][1] += sin(angle);
+        data[1][0] += -sin(angle);
+        data[1][1] += cos(angle);
+
+        std::cout << toString() << std::endl;
+
+        test.invert();
+        translate(test);
+        std::cout << toString() << std::endl;
 
     }
 
