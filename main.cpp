@@ -51,8 +51,8 @@ int main(int argc, char *argv[]) {
     auto vectorTranslate = math::Vector{25.f, 25.f};
     auto vectorScale = math::Vector{2.f, 2.f};
 
-    matrix.translate(vectorTranslate);
-    matrix.rotate(90);
+   // matrix.translate(vectorTranslate);
+    matrix.rotate(0.1);
     //matrix.scale(vectorScale);
     std::cout << matrix.toString() << std::endl;
 
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     shape.points.push_back(vector4);
     shape.points.push_back(vector5);
 
-    shape.multiply(matrix);
+    //shape.multiply(matrix);
 
     Grid grid{};
 
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 
     while(!window.shouldClose()) {
         renderer.render(scene);
-        matrix.rotate(0.01);
+       // matrix.rotate(0.01);
         shape.multiply(matrix);
     }
 

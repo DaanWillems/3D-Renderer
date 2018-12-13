@@ -51,8 +51,8 @@ namespace math {
         float a = cos(angle);
 
         data[0][0] += cos(angle);
-        data[0][1] += sin(angle);
-        data[1][0] += -sin(angle);
+        data[0][1] += -sin(angle);
+        data[1][0] += sin(angle);
         data[1][1] += cos(angle);
 
         std::cout << toString() << std::endl;
