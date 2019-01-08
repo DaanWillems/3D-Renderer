@@ -8,7 +8,7 @@
 #include <ui/renderable.h>
 #include <ui/sdl/frame.h>
 #include <vector>
-#include "vector.h"
+#include "vec4.h"
 
 namespace math {
 class grid: public ui::renderable {

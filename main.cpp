@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <ui/sdl/window.h>
 #include <ui/renderer.h>
-#include <math/vector.h>
+#include <math/vec4.h>
 #include <math/Grid.h>
 #include <math/mat4.h>
 #include <math/Shape.h>
@@ -31,13 +31,13 @@ int main(int argc, char *argv[]) {
 
     HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
     int hCrt = _open_osfhandle((long) handle_out, _O_TEXT);
-    FILE* hf_out = _fdopen(hCrt, "w");
+    FILE *hf_out = _fdopen(hCrt, "w");
     setvbuf(hf_out, NULL, _IONBF, 1);
     *stdout = *hf_out;
 
     HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
     hCrt = _open_osfhandle((long) handle_in, _O_TEXT);
-    FILE* hf_in = _fdopen(hCrt, "r");
+    FILE *hf_in = _fdopen(hCrt, "r");
     setvbuf(hf_in, NULL, _IONBF, 128);
     *stdin = *hf_in;
 
@@ -47,20 +47,27 @@ int main(int argc, char *argv[]) {
     renderer renderer{window};
     scene scene{};
 
-    math::mat4 matrix{0.f};
-    auto vectorTranslate = math::vector{25.f, 25.f};
-    auto vectorScale = math::vector{2.f, 2.f};
+    math::mat4 matrix{1.f};
+    auto vectorScale = math::vec4{2.f, 2.f, 2.f};
+    auto vectorTranslate = math::vec4{80.f, 80.f, 80.f};
 
-   // mat4.translate(vectorTranslate);
-   // matrix.rotate(0.1);
-    //mat4.scale(vectorScale);
+    matrix.translate(vectorTranslate);
+    matrix.rotate(40, vec4{1, 0, 0});
+    matrix.rotate(40, vec4{0, 0, 1});
+    //matrix.scale(vectorScale);
+
+    std::cout << "---------\n";
     std::cout << matrix.toString() << std::endl;
 
-    math::vector vector1{-20, -20, 1};
-    math::vector vector2{20, -20, 1};
-    math::vector vector3{20, 20, 1};
-    math::vector vector4{-20, 20, 1};
-    math::vector vector5{-20, -20, 1};
+    math::vec4 vector1{-20, -20, 0, 1.f};
+    math::vec4 vector2{20, -20, 0, 1.f};
+    math::vec4 vector3{20, 20, 0, 1.f};
+    math::vec4 vector4{-20, 20, 0, 1.f};
+    math::vec4 vector5{-20, -20, 0, 1.f};
+
+    math::vec4 vector6{-20, -20, -20, 1.f};
+    math::vec4 vector7{20, -20, -20, 1.f};
+    math::vec4 vector8{20, -20, 0, 1.f};
 
     shape shape;
     shape.points.push_back(vector1);
@@ -68,18 +75,20 @@ int main(int argc, char *argv[]) {
     shape.points.push_back(vector3);
     shape.points.push_back(vector4);
     shape.points.push_back(vector5);
+    shape.points.push_back(vector6);
+    shape.points.push_back(vector7);
+    shape.points.push_back(vector8);
 
-    //shape.multiply(mat4);
+    shape.multiply(matrix);
+
 
     grid grid{};
 
-    scene.renderables.push_back(dynamic_cast<renderable*>(&shape));
-    scene.renderables.push_back(dynamic_cast<renderable*>(&grid));
+    scene.renderables.push_back(dynamic_cast<renderable *>(&shape));
+    scene.renderables.push_back(dynamic_cast<renderable *>(&grid));
 
-    while(!window.shouldClose()) {
+    while (!window.shouldClose()) {
         renderer.render(scene);
-       // mat4.rotate(0.01);
-      //  shape.multiply(matrix);
     }
 
     return 0;

@@ -6,15 +6,16 @@
 #define RDALGEBRA2_SHAPE_H
 
 #include <vector>
-#include "vector.h"
+#include "vec4.h"
 #include "mat4.h"
 
 namespace math {
     class shape: public ui::renderable  {
     public:
-        std::vector<vector> points;
+        std::vector<vec4> points;
         void draw(ui::sdl::frame& frame) override;
         void multiply(mat4 &other);
+        std::string toString() const;
     };
 }
 

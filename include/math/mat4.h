@@ -6,22 +6,22 @@
 #define RDALGEBRA2_MATRIX_H
 
 namespace math {
-    class vector;
+    class vec4;
 }
 
 #include <vector>
 #include <stdexcept>
 #include <string>
-#include "math/Vector.h"
+#include "math/vec4.h"
 
 namespace math {
     class mat4 {
     public:
         mat4(float initValue);
 
-        void translate(math::vector& other);
-        void scale(math::vector other);
-        void rotate(float angle);
+        void translate(math::vec4& other);
+        void scale(math::vec4 other);
+        void rotate(float angle, vec4 axis);
         void invert();
 
         mat4 operator+(const mat4 &other) const;
