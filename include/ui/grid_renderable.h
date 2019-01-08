@@ -1,20 +1,19 @@
 //
 // Created by solaw on 05/11/2018.
 //
-#include <ui/sdl/Frame.h>
 
 #ifndef RDALGEBRA2_GRIDRENDERABLE_H
 #define RDALGEBRA2_GRIDRENDERABLE_H
 //
 // Created by solaw on 05/11/2018.
 //
-#include "../../include/ui/Renderable.h"
-#include "ui/sdl/Frame.h"
+#include "renderable.h"
+#include "ui/sdl/frame.h"
 
 namespace ui {
-    class GridRenderable: public Renderable {
+    class grid_renderable: public renderable {
     public:
-        void draw(Frame frame) override;
+        void draw(frame frame) override;
     };
 }
 #endif //RDALGEBRA2_GRIDRENDERABLE_H

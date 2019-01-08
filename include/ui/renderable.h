@@ -2,14 +2,14 @@
 // Created by solaw on 05/11/2018.
 //
 
-#include <ui/sdl/Frame.h>
+#include <ui/sdl/frame.h>
 
 #ifndef RDALGEBRA2_RENDERABLE_H
 #define RDALGEBRA2_RENDERABLE_H
 namespace ui {
-    class Renderable {
+    class renderable {
     public:
-        virtual void draw(sdl::Frame& frame)=0;
+        virtual void draw(sdl::frame& frame)=0;
     };
 }
 

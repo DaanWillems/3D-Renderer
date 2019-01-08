@@ -1,10 +1,10 @@
 
-#include <math/Matrix.h>
+#include <math/mat4.h>
 #include <math.h>
 #include <iostream>
 
 namespace math {
-    Matrix::Matrix(int rows, int columns, float initValue): rows{rows}, columns{columns} {
+    mat4::mat4(float initValue): rows{4}, columns{4} {
         data.resize(rows, std::vector<float>(columns, 0));
         int j = 0;
         for(int i = 0; i < rows; i++) {
@@ -13,14 +13,14 @@ namespace math {
         }
     }
 
-    void Matrix::translate(Vector &other) {
+    void mat4::translate(vector &other) {
         for(int i = 0; i < other.data.size(); i++) {
             data[i][columns-1] += other.data[i];
         }
     }
 
-    void Matrix::scale(Vector other) {
-        Vector test{data[0][columns-1], data[1][columns-1]};
+    void mat4::scale(vector other) {
+        vector test{data[0][columns-1], data[1][columns-1]};
 
         test.invert();
         translate(test);
@@ -36,15 +36,15 @@ namespace math {
     }
 
 
-    void Matrix::rotate(float angle) {
-        Vector test{data[0][columns-1], data[1][columns-1]};
+    void mat4::rotate(float angle) {
+        vector test{data[0][columns-1], data[1][columns-1]};
         test.invert();
         translate(test);
 
         std::cout << toString() << std::endl;
 
         if(this->rows != 3 || this->columns != 3) {
-            throw std::runtime_error("Invalid matrix rotation");
+            throw std::runtime_error("Invalid mat4 rotation");
         }
 
         angle = (angle * M_PI) / 180;
@@ -63,7 +63,7 @@ namespace math {
 
     }
 
-    void Matrix::invert() {
+    void mat4::invert() {
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < columns; j++) {
                 data[i][j] = -data[i][j];
@@ -71,39 +71,39 @@ namespace math {
         }
     }
 
-    Matrix Matrix::operator+(const Matrix &other) const {
+    mat4 mat4::operator+(const mat4 &other) const {
         if(columns != other.rows || rows != other.rows) {
-            throw std::runtime_error("Invalid matrix addition");
+            throw std::runtime_error("Invalid mat4 addition");
         }
 
-        Matrix newMatrix{rows, columns, 0};
+        mat4 newmatrix{0};
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < columns; j++) {
-                newMatrix.data[i][j] = data[i][j] + other.data[i][j];
+                newmatrix.data[i][j] = data[i][j] + other.data[i][j];
             }
         }
 
-        newMatrix.toString();
+        newmatrix.toString();
 
-        return newMatrix;
+        return newmatrix;
     }
 
-    Matrix Matrix::operator-(const Matrix &other) const {
+    mat4 mat4::operator-(const mat4 &other) const {
         if(columns != other.rows || rows != other.rows) {
-            throw std::runtime_error("Invalid matrix subtraction");
+            throw std::runtime_error("Invalid mat4 subtraction");
         }
 
-        Matrix newMatrix{rows, columns, 0};
+        mat4 newmatrix{0};
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < columns; j++) {
-                newMatrix.data[i][j] = data[i][j] - other.data[i][j];
+                newmatrix.data[i][j] = data[i][j] - other.data[i][j];
             }
         }
 
-        return newMatrix;
+        return newmatrix;
     }
 
-    std::string Matrix::toString() const {
+    std::string mat4::toString() const {
         std::string result = "";
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < columns; j++) {
@@ -116,27 +116,27 @@ namespace math {
     }
 
 
-    Matrix Matrix::operator*(const Matrix &other) const {
+    mat4 mat4::operator*(const mat4 &other) const {
         if(columns != other.rows) {
-            throw std::runtime_error("Invalid matrix multiplication");
+            throw std::runtime_error("Invalid mat4 multiplication");
         }
 
-        Matrix newMatrix{rows, other.columns, 0};
+        mat4 newmatrix{0};
 
         for(int i = 0; i < rows; i++) {
             for(int j = 0; j < other.columns; j++) {
                 for(int k = 0; k < columns; k++) {
-                    newMatrix.data[i][j] += data[i][k] * other.data[k][j];
+                    newmatrix.data[i][j] += data[i][k] * other.data[k][j];
                 }
             }
         }
 
-        return newMatrix;
+        return newmatrix;
     }
 
-    Matrix Matrix::operator*=(const Matrix &other) {
+    mat4 mat4::operator*=(const mat4 &other) {
         if(columns != other.rows) {
-            throw std::runtime_error("Invalid matrix multiplication");
+            throw std::runtime_error("Invalid mat4 multiplication");
         }
 
         for(int i = 0; i < rows; i++) {

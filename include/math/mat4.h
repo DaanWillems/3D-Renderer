@@ -6,7 +6,7 @@
 #define RDALGEBRA2_MATRIX_H
 
 namespace math {
-    class Vector;
+    class vector;
 }
 
 #include <vector>
@@ -15,20 +15,20 @@ namespace math {
 #include "math/Vector.h"
 
 namespace math {
-    class Matrix {
+    class mat4 {
     public:
-        Matrix(int rows, int columns, float initValue);
+        mat4(float initValue);
 
-        void translate(math::Vector& other);
-        void scale(math::Vector other);
+        void translate(math::vector& other);
+        void scale(math::vector other);
         void rotate(float angle);
         void invert();
 
-        Matrix operator+(const Matrix &other) const;
-        Matrix operator-(const Matrix &other) const;
-        Matrix operator*(const Matrix &other) const;
+        mat4 operator+(const mat4 &other) const;
+        mat4 operator-(const mat4 &other) const;
+        mat4 operator*(const mat4 &other) const;
 
-        Matrix operator*=(const Matrix &other);
+        mat4 operator*=(const mat4 &other);
 
         std::string toString() const;
         std::vector<std::vector<float>> data;

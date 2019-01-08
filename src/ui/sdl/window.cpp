@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void ui::sdl::Window::init(const char *title, const int width, const int height, const int x, const int y) {
+void ui::sdl::window::init(const char *title, const int width, const int height, const int x, const int y) {
     this->width = width;
     this->height = height;
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -23,12 +23,12 @@ void ui::sdl::Window::init(const char *title, const int width, const int height,
         gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
         if (gWindow == NULL)
         {
-            printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+            printf("window could not be created! SDL Error: %s\n", SDL_GetError());
         }
     }
 }
 
-bool ui::sdl::Window::shouldClose()
+bool ui::sdl::window::shouldClose()
 {
     SDL_Event e;
     //Handle events on queue
@@ -44,9 +44,9 @@ bool ui::sdl::Window::shouldClose()
     return false;
 }
 
-void ui::sdl::Window::close() {
+void ui::sdl::window::close() {
     if (gWindow == nullptr) {
-        std::cout << "Window was never initialized" << std::endl;
+        std::cout << "window was never initialized" << std::endl;
         SDL_DestroyWindow(gWindow);
     }
     SDL_Quit();

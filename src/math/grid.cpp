@@ -2,11 +2,9 @@
 // Created by solaw on 05/11/2018.
 //
 
-#include <math/Grid.h>
+#include <math/grid.h>
 
-#include "../../include/math/Grid.h"
-
-void math::Grid::draw(ui::sdl::Frame &frame) {
+void math::grid::draw(ui::sdl::frame &frame) {
     frame.drawLine(0, 0, 320, 0);
     frame.drawLine(0, 0, 0, 320);
     frame.drawLine(0, 0, -320, 0);

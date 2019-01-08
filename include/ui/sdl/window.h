@@ -8,7 +8,7 @@
 #include <SDL.h>
 
 namespace ui::sdl {
-    class Window {
+    class window {
     public:
         void init(const char* title, int width, int height, int x, int y);
         bool shouldClose();

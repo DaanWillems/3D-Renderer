@@ -6,12 +6,12 @@
 #define RDALGEBRA2_SCENE_H
 
 #include <vector>
-#include "Renderable.h"
+#include "renderable.h"
 
 namespace ui {
-    class Scene {
+    class scene {
     public:
-        std::vector<Renderable*> renderables;
+        std::vector<renderable*> renderables;
     };
 }
 

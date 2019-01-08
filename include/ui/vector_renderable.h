@@ -5,10 +5,10 @@
 #ifndef RDALGEBRA2_VECTORRENDERABLE_H
 #define RDALGEBRA2_VECTORRENDERABLE_H
 
-#include "Renderable.h"
+#include "renderable.h"
 
 namespace ui {
-    class VectorRenderable : public Renderable {
+    class vector_renderable : public renderable {
 
     };
 }

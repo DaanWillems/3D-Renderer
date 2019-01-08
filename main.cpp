@@ -5,11 +5,11 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <stdio.h>
-#include <ui/sdl/Window.h>
-#include <ui/Renderer.h>
-#include <math/Vector.h>
+#include <ui/sdl/window.h>
+#include <ui/renderer.h>
+#include <math/vector.h>
 #include <math/Grid.h>
-#include <math/Matrix.h>
+#include <math/mat4.h>
 #include <math/Shape.h>
 
 #include <stdio.h>
@@ -41,45 +41,45 @@ int main(int argc, char *argv[]) {
     setvbuf(hf_in, NULL, _IONBF, 128);
     *stdin = *hf_in;
 
-    ui::sdl::Window window{};
+    ui::sdl::window window{};
     window.init("Test", SCREEN_WIDTH, SCREEN_HEIGHT, 10, 10);
 
-    Renderer renderer{window};
-    Scene scene{};
+    renderer renderer{window};
+    scene scene{};
 
-    math::Matrix matrix{3, 3, 0.f};
-    auto vectorTranslate = math::Vector{25.f, 25.f};
-    auto vectorScale = math::Vector{2.f, 2.f};
+    math::mat4 matrix{0.f};
+    auto vectorTranslate = math::vector{25.f, 25.f};
+    auto vectorScale = math::vector{2.f, 2.f};
 
-   // matrix.translate(vectorTranslate);
-    matrix.rotate(0.1);
-    //matrix.scale(vectorScale);
+   // mat4.translate(vectorTranslate);
+   // matrix.rotate(0.1);
+    //mat4.scale(vectorScale);
     std::cout << matrix.toString() << std::endl;
 
-    math::Vector vector1{-20, -20, 1};
-    math::Vector vector2{20, -20, 1};
-    math::Vector vector3{20, 20, 1};
-    math::Vector vector4{-20, 20, 1};
-    math::Vector vector5{-20, -20, 1};
+    math::vector vector1{-20, -20, 1};
+    math::vector vector2{20, -20, 1};
+    math::vector vector3{20, 20, 1};
+    math::vector vector4{-20, 20, 1};
+    math::vector vector5{-20, -20, 1};
 
-    Shape shape;
+    shape shape;
     shape.points.push_back(vector1);
     shape.points.push_back(vector2);
     shape.points.push_back(vector3);
     shape.points.push_back(vector4);
     shape.points.push_back(vector5);
 
-    //shape.multiply(matrix);
+    //shape.multiply(mat4);
 
-    Grid grid{};
+    grid grid{};
 
-    scene.renderables.push_back(dynamic_cast<Renderable*>(&shape));
-    scene.renderables.push_back(dynamic_cast<Renderable*>(&grid));
+    scene.renderables.push_back(dynamic_cast<renderable*>(&shape));
+    scene.renderables.push_back(dynamic_cast<renderable*>(&grid));
 
     while(!window.shouldClose()) {
         renderer.render(scene);
-       // matrix.rotate(0.01);
-        shape.multiply(matrix);
+       // mat4.rotate(0.01);
+      //  shape.multiply(matrix);
     }
 
     return 0;

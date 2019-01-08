@@ -6,13 +6,13 @@
 #define RDALGEBRA2_FRAME_H
 
 class Window;
-#include <ui/sdl/Window.h>
+#include <ui/sdl/window.h>
 
 namespace ui::sdl {
-    class Frame {
+    class frame {
     public:
-        Frame()= default;
-        explicit Frame(SDL_Window *window, int width, int height);
+        frame()= default;
+        explicit frame(SDL_Window *window, int width, int height);
         void draw_rectangle(int x, int y, int width, int height);
         void drawLine(int x1, int y1, int x2, int y2);
 
