@@ -16,8 +16,11 @@
 #include <fcntl.h>
 
 #ifdef _WIN32
+
 #include <io.h>
 #include <windows.h>
+#include <cmath>
+
 #endif
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -73,8 +76,8 @@ int main(int argc, char *argv[]) {
     math::vec4 vector4{-20, 20, 0, 1.f};
     math::vec4 vector5{-20, -20, 0, 1.f};
 
-    math::vec4 vector6{-20, -20, -20, 1.f};
-    math::vec4 vector7{20, -20, -20, 1.f};
+    math::vec4 vector6{-20, -20, -480, 1.f};
+    math::vec4 vector7{20, -20, -480, 1.f};
     math::vec4 vector8{20, -20, 0, 1.f};
 
     mesh shape;
@@ -88,30 +91,44 @@ int main(int argc, char *argv[]) {
     shape.points.push_back(vector8);
 
 //    mesh.model_matrix(matrix);
- //   shape.model_matrix(std::move(matrix));
+    //   shape.model_matrix(std::move(matrix));
     //mesh.multiply(matrix);
 
 
     float i = 0.f;
 
-    shape.location(vec4{80.f ,0.f});
+   // shape.location(vec4{0.f, -10.f});
+    shape.rotation({40.f, 40.f});
     grid grid{};
 
-    float near{0.001f};
-    float far{100.f};
-    float alpha{1.57079633f};
 
-
-    math::mat4 projection{1};
-    projection.data[3][3] = -far / ( far -near );
-    projection.data[2][2] = 0;
+    //std::cout << projection.toString()+"\n";
 
     scene.renderables.push_back(&shape);
     scene.renderables.push_back(&grid);
+    float near_plane{0.001f};
+    float far_plane{100.f};
+    float alpha{90.f};
 
     while (!window.shouldClose()) {
+        float scale = 1.f / (tan((alpha / 2) * (M_PI / 180)));
+
+      //  alpha += 0.1;
+
+        math::mat4 projection{1};
+        projection.data[0][0] = scale;
+        projection.data[1][1] = scale;
+        projection.data[2][2] = -(far_plane / (far_plane - near_plane));
+        projection.data[3][2] = -((far_plane * near_plane) / (far_plane - near_plane));
+
+        projection.data[3][3] = 0.f;
+        projection.data[2][3] = -1.f;
+
+        renderer.projection(projection);
         renderer.render(scene);
-        shape.rotation(vec4{i, i, i});
+        renderer.projection(projection);
+        shape.location(shape.location()+vec4{0.f, 0.f, 0.5f});
+        // shape.rotation(vec4{i, i, i});
         i += 0.1;
     }
 

@@ -15,7 +15,7 @@ ui::renderer::renderer(sdl::window window) :
 void ui::renderer::render(scene &scene) {
   frame.clear();
   for (auto renderable : scene.renderables) {
-    renderable->draw(frame);
+    renderable->draw(frame, projection_);
   }
   frame.swap();
 }

@@ -15,7 +15,7 @@ namespace math {
     public:
         mesh();
         std::vector<vec4> points;
-        void draw(ui::sdl::frame& frame) override;
+        void draw(ui::sdl::frame& frame, math::mat4 projection) override;
         math::mat4& model_matrix() override;
 
         void location(vec4 location_);

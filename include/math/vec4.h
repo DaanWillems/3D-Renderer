@@ -49,7 +49,7 @@ class vec4: public ui::renderable {
         float dot(const vec4 &other) const;
 
         std::string toString();
-        void draw(ui::sdl::frame& frame) override;
+        void draw(ui::sdl::frame& frame, math::mat4 projection) override;
 
         std::vector<float> data;
     };

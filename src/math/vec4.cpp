@@ -132,7 +132,7 @@ namespace math {
         return *this;
     }
 
-    void vec4::draw(ui::sdl::frame &frame) {
+    void vec4::draw(ui::sdl::frame &frame, math::mat4 projection) {
         frame.draw_rectangle(static_cast<int>(x() - 3), static_cast<int>(y() + 3), 6, 6);
     }
 
