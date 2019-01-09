@@ -12,16 +12,15 @@ namespace math {
         model_matrix_ = std::make_unique<math::mat4>(1.f);
     }
 
-    void mesh::draw(ui::sdl::frame &frame, math::mat4 projection) {
+    void mesh::draw(ui::sdl::frame &frame, math::mat4 projection, math::mat4 view) {
         for (int i = 0; i < points.size() - 1; i++) {
             vec4 point_1 = points[i];
             vec4 point_2 = points[i+1];
 
-            point_1 = point_1.multiply(model_matrix());
-            point_1 = point_1.multiply(projection);
+            auto pvm = view * model_matrix();
 
-            point_2 = point_2.multiply(model_matrix());
-            point_2 = point_2.multiply(projection);
+            point_1 = point_1.multiply(pvm);
+            point_2 = point_2.multiply(pvm);
 
             frame.drawLine(point_1.x(), point_1.y(), point_2.x(), point_2.y());
         }

@@ -35,5 +35,7 @@ namespace math {
         int rows;
         int columns;
     };
+
+    mat4 look_at(vec4 eye, vec4 center, vec4 up);
 }
 #endif //RDALGEBRA2_MATRIX_H

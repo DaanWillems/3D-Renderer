@@ -188,4 +188,40 @@ namespace math {
 
         return *this;
     }
+
+    mat4 look_at(vec4 eye, vec4 lookat, vec4 up) {
+        eye.w(1);
+        lookat.w(1);
+        up.w(1);
+
+        vec4 direction = eye - lookat;
+
+        auto right = up.cross(direction);
+        up = direction.cross(right);
+
+        up.normalize();
+        right.normalize();
+        direction.normalize();
+
+        mat4 camera{1.f};
+
+        camera.data[0][0] = right.x();
+        camera.data[0][1] = right.y();
+        camera.data[0][2] = right.z();
+
+        camera.data[1][0] = up.x();
+        camera.data[1][1] = up.y();
+        camera.data[1][2] = up.z();
+
+        camera.data[2][0] = direction.x();
+        camera.data[2][1] = direction.y();
+        camera.data[2][2] = direction.z();
+
+        mat4 eye_m{1.f};
+        eye_m.data[3][0] = -eye.x();
+        eye_m.data[3][1] = -eye.y();
+        eye_m.data[3][2] = -eye.z();
+
+        return camera * eye_m;
+    }
 }

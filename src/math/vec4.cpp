@@ -4,6 +4,7 @@
 
 #include <math/vec4.h>
 #include <iostream>
+#include <cmath>
 
 namespace math {
 
@@ -132,7 +133,7 @@ namespace math {
         return *this;
     }
 
-    void vec4::draw(ui::sdl::frame &frame, math::mat4 projection) {
+    void vec4::draw(ui::sdl::frame &frame, math::mat4 projection, math::mat4 view_) {
         frame.draw_rectangle(static_cast<int>(x() - 3), static_cast<int>(y() + 3), 6, 6);
     }
 
@@ -161,7 +162,7 @@ namespace math {
         return result;
     }
 
-  float vec4::dot(const vec4 &other) const {
+    float vec4::dot(const vec4 &other) const {
         float cum{0};
 
         for (unsigned i = 0; i < data.size(); ++i) {
@@ -169,7 +170,35 @@ namespace math {
         }
 
         return cum;
-  }
+    }
 
+    vec4 vec4::cross(const vec4 &other) const {
+        vec4 result{0, 0, 0, 0};
 
+        result.x((data[1] * other.data[2]) - (data[2] * other.data[1]));
+        result.y((data[2] * other.data[0]) - (data[0] * other.data[2]));
+        result.z((data[0] * other.data[1]) - (data[1] * other.data[0]));
+
+        return result;
+    }
+
+    float vec4::length() const {
+        return sqrt((data[0] * data[0]) + (data[1] * data[1]) + (data[2] * data[2]));
+    }
+
+    vec4 vec4::normalize() {
+        auto length = this->length();
+        for (int i = 0; i < data.size(); i++) {
+            data[i] = data[i] / length;
+        }
+        return *this;
+    }
+
+    vec4 normalize(vec4 v) {
+        auto length = v.length();
+        for (int i = 0; i < v.data.size(); i++) {
+            v.data[i] = v.data[i] / length;
+        }
+        return v;
+    }
 }

@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
     math::vec4 vector4{-20, 20, 0, 1.f};
     math::vec4 vector5{-20, -20, 0, 1.f};
 
-    math::vec4 vector6{-20, -20, -480, 1.f};
-    math::vec4 vector7{20, -20, -480, 1.f};
+    math::vec4 vector6{-20, -20, -20, 1.f};
+    math::vec4 vector7{20, -20, -20, 1.f};
     math::vec4 vector8{20, -20, 0, 1.f};
 
     mesh shape;
@@ -97,23 +97,41 @@ int main(int argc, char *argv[]) {
 
     float i = 0.f;
 
-   // shape.location(vec4{0.f, -10.f});
-    shape.rotation({40.f, 40.f});
+    mesh shape2;
+    shape2.points.push_back(vector1);
+    shape2.points.push_back(vector2);
+    shape2.points.push_back(vector3);
+    shape2.points.push_back(vector4);
+    shape2.points.push_back(vector5);
+    shape2.points.push_back(vector6);
+    shape2.points.push_back(vector7);
+    shape2.points.push_back(vector8);
+
+    shape2.location(vec4{-70.f, 0.f});
+    //shape2.rotation({40.f, 40.f});
     grid grid{};
 
 
     //std::cout << projection.toString()+"\n";
 
     scene.renderables.push_back(&shape);
+    scene.renderables.push_back(&shape2);
     scene.renderables.push_back(&grid);
+
     float near_plane{0.001f};
     float far_plane{100.f};
     float alpha{90.f};
+
+    float a{0};
 
     while (!window.shouldClose()) {
         float scale = 1.f / (tan((alpha / 2) * (M_PI / 180)));
 
       //  alpha += 0.1;
+
+       a += 0.005;
+
+        auto camera = math::look_at({10, 10, -10}, {0, 0, 1}, {0, 1, 0});
 
         math::mat4 projection{1};
         projection.data[0][0] = scale;
@@ -125,11 +143,9 @@ int main(int argc, char *argv[]) {
         projection.data[2][3] = -1.f;
 
         renderer.projection(projection);
+        renderer.view(camera);
         renderer.render(scene);
-        renderer.projection(projection);
-        shape.location(shape.location()+vec4{0.f, 0.f, 0.5f});
-        // shape.rotation(vec4{i, i, i});
-        i += 0.1;
+        i += 1.1;
     }
 
     return 0;

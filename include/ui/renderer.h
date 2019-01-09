@@ -10,20 +10,25 @@
 #include <math/mat4.h>
 
 namespace ui {
-  class renderer {
-  public:
-    renderer(sdl::window window);
+    class renderer {
+    public:
+        renderer(sdl::window window);
 
-    void render(scene &scene);
+        void render(scene &scene);
 
-    void projection(math::mat4 projection_);
+        void projection(math::mat4 projection_);
 
-    math::mat4 projection();
+        void view(math::mat4 view_);
 
-  private:
-    sdl::frame frame;
-    math::mat4 projection_;
-  };
+        math::mat4 projection();
+
+        math::mat4 view();
+
+    private:
+        sdl::frame frame;
+        math::mat4 projection_;
+        math::mat4 view_;
+    };
 }
 
 #endif //RDALGEBRA2_RENDERER_H

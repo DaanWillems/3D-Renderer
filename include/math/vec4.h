@@ -47,12 +47,17 @@ class vec4: public ui::renderable {
 
         vec4 multiply(mat4& matrix);
         float dot(const vec4 &other) const;
+        vec4 cross(const vec4 &other) const;
+        float length() const;
+        vec4 normalize();
 
         std::string toString();
-        void draw(ui::sdl::frame& frame, math::mat4 projection) override;
+        void draw(ui::sdl::frame& frame, math::mat4 projection, math::mat4 view_) override;
 
         std::vector<float> data;
     };
+
+    vec4 normalize(vec4 v);
 }
 
 #endif //RDALGEBRA2_VECTOR_H

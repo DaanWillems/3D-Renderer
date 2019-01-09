@@ -13,7 +13,7 @@
 namespace math {
 class grid: public ui::renderable {
     public:
-        void draw(ui::sdl::frame& frame, math::mat4 projection) override;
+        void draw(ui::sdl::frame& frame, math::mat4 projection, math::mat4 view_) override;
     };
 }
 

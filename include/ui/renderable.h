@@ -15,7 +15,7 @@ namespace math {
 namespace ui {
   class renderable {
   public:
-    virtual void draw(sdl::frame &frame, math::mat4 projection) = 0;
+    virtual void draw(sdl::frame &frame, math::mat4 projection, math::mat4 view_) = 0;
 
     virtual math::mat4 &model_matrix() {
     }
