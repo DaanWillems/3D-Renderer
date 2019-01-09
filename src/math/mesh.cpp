@@ -2,24 +2,17 @@
 // Created by Daan on 23/11/2018.
 //
 
-#include <math/shape.h>
+#include <math/mesh.h>
 #include <iostream>
 #include <algorithm>
 #include <numeric>
 
 namespace math {
-    shape::shape() {
+    mesh::mesh() {
         model_matrix_ = std::make_unique<math::mat4>(1.f);
-
-        auto vectorScale = math::vec4{2.f, 2.f, 2.f};
-        auto vectorTranslate = math::vec4{80.f, 80.f, 80.f};
-
-        model_matrix_->translate(vectorTranslate);
-        model_matrix_->rotate(40, vec4(1, 0, 0));
-        model_matrix_->rotate(40, vec4(0, 0, 1));
     }
 
-    void shape::draw(ui::sdl::frame &frame) {
+    void mesh::draw(ui::sdl::frame &frame) {
         for (int i = 0; i < points.size() - 1; i++) {
             vec4 point_1 = points[i];
             vec4 point_2 = points[i+1];
@@ -31,8 +24,8 @@ namespace math {
         }
     }
 
-    void shape::multiply(mat4 &other) {
-        shape newShape;
+    void mesh::multiply(mat4 &other) {
+        mesh newShape;
         for (int i = 0; i < points.size(); i++) {
             newShape.points.push_back(points[i].multiply(other));
         }
@@ -41,16 +34,36 @@ namespace math {
         this->points = newShape.points;
     }
 
-    std::string shape::toString() const {
+    std::string mesh::toString() const {
 //        return std::accumulate(points.begin(), points.end(), std::string{""} ,[&](auto& result, vec4& cur) {
 //            return result + cur.toString();
 //        });
         return "";
     }
 
-    math::mat4 &shape::model_matrix() {
+    math::mat4 &mesh::model_matrix() {
+        model_matrix_ = std::make_unique<math::mat4>(1.f);
+        model_matrix_->translate(location_);
+        model_matrix_->rotate(rotation_.x(), {0.f, 0.f, 1.f});
+        model_matrix_->rotate(rotation_.y(), {0.f, 1.f, 0.f});
+        model_matrix_->rotate(rotation_.z(), {1.f, 0.f, 0.f});
+
         return *model_matrix_;
     }
 
+    void mesh::location(vec4 location) {
+        location_ = location;
+    }
 
+    vec4& mesh::location() {
+        return location_;
+    }
+
+    void mesh::rotation(vec4 rotation) {
+        rotation_ = rotation;
+    }
+
+    vec4 &mesh::rotation() {
+        return rotation_;
+    }
 }

@@ -10,7 +10,7 @@
 #include <math/vec4.h>
 #include <math/Grid.h>
 #include <math/mat4.h>
-#include <math/Shape.h>
+#include <math/mesh.h>
 
 #include <stdio.h>
 #include <io.h>
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     math::vec4 vector7{20, -20, -20, 1.f};
     math::vec4 vector8{20, -20, 0, 1.f};
 
-    shape shape;
+    mesh shape;
     shape.points.push_back(vector1);
     shape.points.push_back(vector2);
     shape.points.push_back(vector3);
@@ -79,8 +79,14 @@ int main(int argc, char *argv[]) {
     shape.points.push_back(vector7);
     shape.points.push_back(vector8);
 
-    //shape.multiply(matrix);
+//    mesh.model_matrix(matrix);
+ //   shape.model_matrix(std::move(matrix));
+    //mesh.multiply(matrix);
 
+
+    float i = 0.f;
+
+    shape.location(vec4{80.f ,0.f});
     grid grid{};
 
     scene.renderables.push_back(dynamic_cast<renderable *>(&shape));
@@ -88,6 +94,8 @@ int main(int argc, char *argv[]) {
 
     while (!window.shouldClose()) {
         renderer.render(scene);
+        shape.rotation(vec4{i, i, i});
+        i += 0.1;
     }
 
     return 0;

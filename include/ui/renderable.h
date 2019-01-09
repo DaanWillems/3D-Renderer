@@ -19,6 +19,10 @@ namespace ui {
         virtual math::mat4& model_matrix() {
 
         }
+
+        virtual void model_matrix(math::mat4&&) {
+
+        }
     };
 }
 
