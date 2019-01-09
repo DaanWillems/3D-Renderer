@@ -97,6 +97,15 @@ int main(int argc, char *argv[]) {
     shape.location(vec4{80.f ,0.f});
     grid grid{};
 
+    float near{0.001f};
+    float far{100.f};
+    float alpha{1.57079633f};
+
+
+    math::mat4 projection{1};
+    projection.data[3][3] = -far / ( far -near );
+    projection.data[2][2] = 0;
+
     scene.renderables.push_back(&shape);
     scene.renderables.push_back(&grid);
 

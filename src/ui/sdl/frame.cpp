@@ -10,7 +10,7 @@ namespace ui::sdl {
     }
 
     void frame::draw_rectangle(int x, int y, int width, int height) {
-        SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
+        SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
 
         int rasterX = x+(windowWidth/2);
         int rasterY = (windowHeight/2)-y;
@@ -25,7 +25,7 @@ namespace ui::sdl {
         int rasterY1 = (windowHeight/2)-y1;
         int rasterY2 = (windowHeight/2)-y2;
 
-        SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
+        SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
         SDL_RenderDrawLine(renderer, rasterX1, rasterY1, rasterX2, rasterY2);
     }
 
@@ -34,7 +34,7 @@ namespace ui::sdl {
     }
 
     void frame::clear() {
-        SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
+        SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
         SDL_RenderClear( renderer );
     }
 }

@@ -7,15 +7,23 @@
 
 #include <ui/scene.h>
 #include <ui/sdl/frame.h>
+#include <math/mat4.h>
 
 namespace ui {
-    class renderer {
-    public:
-        renderer(sdl::window window);
-        void render(scene& scene);
-    private:
-        sdl::frame frame;
-    };
+  class renderer {
+  public:
+    renderer(sdl::window window);
+
+    void render(scene &scene);
+
+    void projection(math::mat4 projection_);
+
+    math::mat4 projection();
+
+  private:
+    sdl::frame frame;
+    math::mat4 projection_;
+  };
 }
 
 #endif //RDALGEBRA2_RENDERER_H

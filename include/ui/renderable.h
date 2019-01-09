@@ -9,21 +9,19 @@
 #define RDALGEBRA2_RENDERABLE_H
 
 namespace math {
-    class mat4;
+  class mat4;
 }
 
 namespace ui {
-    class renderable {
-    public:
-        virtual void draw(sdl::frame& frame)=0;
-        virtual math::mat4& model_matrix() {
+  class renderable {
+  public:
+    virtual void draw(sdl::frame &frame) = 0;
 
-        }
+    virtual math::mat4 &model_matrix() {
+    }
 
-        virtual void model_matrix(math::mat4&&) {
-
-        }
-    };
+    virtual void model_matrix(math::mat4 &&) {}
+  };
 }
 
 #endif //RDALGEBRA2_RENDERABLE_H
