@@ -8,15 +8,16 @@
 #include <ui/sdl/window.h>
 #include <ui/renderer.h>
 #include <math/vec4.h>
-#include <math/Grid.h>
+#include <math/grid.h>
 #include <math/mat4.h>
-#include <math/Shape.h>
+#include <math/shape.h>
 
 #include <stdio.h>
-#include <io.h>
 #include <fcntl.h>
-#include <windows.h>
-
+#ifdef _WIN32
+//#include <io.h>
+//#include <windows.h>
+#endif
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 640;
@@ -26,6 +27,7 @@ using namespace math;
 using namespace ui::sdl;
 
 int main(int argc, char *argv[]) {
+#ifdef _WIN32
 
     AllocConsole();
 
@@ -40,7 +42,7 @@ int main(int argc, char *argv[]) {
     FILE *hf_in = _fdopen(hCrt, "r");
     setvbuf(hf_in, NULL, _IONBF, 128);
     *stdin = *hf_in;
-
+#endif
     ui::sdl::window window{};
     window.init("Test", SCREEN_WIDTH, SCREEN_HEIGHT, 10, 10);
 
@@ -54,10 +56,15 @@ int main(int argc, char *argv[]) {
     matrix.translate(vectorTranslate);
     matrix.rotate(40, vec4{1, 0, 0});
     matrix.rotate(40, vec4{0, 0, 1});
-    //matrix.scale(vectorScale);
+//    matrix.scale(vectorScale);
 
     std::cout << "---------\n";
     std::cout << matrix.toString() << std::endl;
+
+
+    math::vec4 v1{0, 1.f};
+    math::vec4 v2{0, 1.f};
+    std::cout << "Dot: " << v1.dot(v2) << "\n";
 
     math::vec4 vector1{-20, -20, 0, 1.f};
     math::vec4 vector2{20, -20, 0, 1.f};
@@ -84,8 +91,8 @@ int main(int argc, char *argv[]) {
 
     grid grid{};
 
-    scene.renderables.push_back(dynamic_cast<renderable *>(&shape));
-    scene.renderables.push_back(dynamic_cast<renderable *>(&grid));
+    scene.renderables.push_back(&shape);
+    scene.renderables.push_back(&grid);
 
     while (!window.shouldClose()) {
         renderer.render(scene);

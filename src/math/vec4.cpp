@@ -161,7 +161,15 @@ namespace math {
         return result;
     }
 
+  float vec4::dot(const vec4 &other) const {
+        float cum{0};
 
+        for (unsigned i = 0; i < data.size(); ++i) {
+            cum += data.at(i) * other.data.at(i);
+        }
+
+        return cum;
+  }
 
 
 }
