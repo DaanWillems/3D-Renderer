@@ -46,6 +46,8 @@ class vec4: public ui::renderable {
         vec4 operator*=(const float scale);
 
         vec4 multiply(mat4& matrix);
+        float dot(const vec4 &other) const;
+
         std::string toString();
         void draw(ui::sdl::frame& frame) override;
 

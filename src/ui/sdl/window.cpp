@@ -2,11 +2,10 @@
 // Created by solaw on 05/11/2018.
 //
 
-#include <ui/sdl/Window.h>
+#include <ui/sdl/window.h>
 #include <SDL.h>
 #include <iostream>
 
-#include <ui/sdl/Window.h>
 
 using namespace std;
 
