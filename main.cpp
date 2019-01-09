@@ -79,8 +79,7 @@ int main(int argc, char *argv[]) {
     shape.points.push_back(vector7);
     shape.points.push_back(vector8);
 
-    shape.multiply(matrix);
-
+    //shape.multiply(matrix);
 
     grid grid{};
 
