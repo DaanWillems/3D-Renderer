@@ -1,9 +1,4 @@
-//
-// Created by Daan on 05/11/2018.
-//
-
-#ifndef RDALGEBRA2_VECTOR_H
-#define RDALGEBRA2_VECTOR_H
+#pragma once
 
 namespace math {
     class mat4;
@@ -60,4 +55,3 @@ class vec4: public ui::renderable {
     vec4 normalize(vec4 v);
 }
 
-#endif //RDALGEBRA2_VECTOR_H
