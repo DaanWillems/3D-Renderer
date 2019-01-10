@@ -59,24 +59,6 @@ namespace math {
     void mat4::rotate(float angle, vec4 axis) {
         mat4 to_origin = math::invert(*this);
 
-        mat4 m1{1};
-        float t1 = axis.z() / axis.x();
-        m1.data[0][0] = cos(t1);
-        m1.data[0][2] = sin(t1);
-        m1.data[2][0] = -sin(t1);
-        m1.data[2][2] = cos(t1);
-
-        mat4 m2{1};
-        t1 = 1.f;
-        m2.data[0][0] = cos(t1);
-        m2.data[0][1] = sin(t1);
-        m2.data[1][0] = -sin(t1);
-        m2.data[1][1] = cos(t1);
-
-        mat4 m3{1};
-        mat4 m4{1};
-        mat4 m5{1};
-
         mat4 rotation{1.f};
         angle = (angle * M_PI) / 180;
         float a = cos(angle);
@@ -97,6 +79,7 @@ namespace math {
             rotation.data[1][0] = sin(angle);
             rotation.data[1][1] = cos(angle);
         }
+
         this->data = ((*this * rotation * to_origin) * *this).data;
     }
 

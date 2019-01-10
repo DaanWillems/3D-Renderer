@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
     math::vec4 vector4{-20, 20, 0, 1.f};
     math::vec4 vector5{-20, -20, 0, 1.f};
 
-    math::vec4 vector6{-20, -20, -20, 1.f};
-    math::vec4 vector7{20, -20, -20, 1.f};
+    math::vec4 vector6{-20, -20, 10, 1.f};
+    math::vec4 vector7{20, -20, 10, 1.f};
     math::vec4 vector8{20, -20, 0, 1.f};
 
     mesh shape;
@@ -107,45 +107,47 @@ int main(int argc, char *argv[]) {
     shape2.points.push_back(vector7);
     shape2.points.push_back(vector8);
 
-    shape2.location(vec4{-70.f, 0.f});
+    //shape2.location(vec4{-70.f, 0.f});
     //shape2.rotation({40.f, 40.f});
     grid grid{};
 
 
-    //std::cout << projection.toString()+"\n";
 
     scene.renderables.push_back(&shape);
     scene.renderables.push_back(&shape2);
-    scene.renderables.push_back(&grid);
+   // scene.renderables.push_back(&grid);
 
-    float near_plane{0.001f};
-    float far_plane{100.f};
-    float alpha{90.f};
+    float near_plane{0.1f};
+    float far_plane{500.f};
+    float alpha{70.f};
 
     float a{0};
 
     while (!window.shouldClose()) {
-        float scale = 1.f / (tan((alpha / 2) * (M_PI / 180)));
+        float scale = 1 / (tan((alpha / 2) * (M_PI / 180)));
 
       //  alpha += 0.1;
 
        a += 0.005;
 
-        auto camera = math::look_at({10, 10, -10}, {0, 0, 1}, {0, 1, 0});
+        auto camera = math::look_at({0, 0, -1}, {0, 0, 0}, {0, 1, 0});
 
         math::mat4 projection{1};
         projection.data[0][0] = scale;
         projection.data[1][1] = scale;
-        projection.data[2][2] = -(far_plane / (far_plane - near_plane));
-        projection.data[3][2] = -((far_plane * near_plane) / (far_plane - near_plane));
+        projection.data[2][2] = -far_plane / (far_plane - near_plane);
+        projection.data[3][2] = -far_plane * near_plane / (far_plane - near_plane);
 
         projection.data[3][3] = 0.f;
         projection.data[2][3] = -1.f;
 
+        std::cout << projection.toString()+"\n";
         renderer.projection(projection);
         renderer.view(camera);
         renderer.render(scene);
-        i += 1.1;
+       // shape.rotation({i, 0, 0});
+      //  shape.scale({1.1f, 1.1f, 1.1f});
+        i += .1f;
     }
 
     return 0;
