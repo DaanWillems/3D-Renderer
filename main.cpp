@@ -160,7 +160,6 @@ int main(int argc, char *argv[]) {
       lookat.data[2] -= 0.1f;
     }
 
-
     auto camera = math::look_at(eye, lookat, {0, 1, 0});
 
     math::mat4 projection{1};

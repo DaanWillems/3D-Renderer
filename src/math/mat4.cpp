@@ -63,6 +63,35 @@ namespace math {
         angle = (angle * M_PI) / 180;
         float a = cos(angle);
 
+        if(axis.x() == 1) {
+            rotation.data[1][1] = cos(angle);
+            rotation.data[1][2] = -sin(angle);
+            rotation.data[2][1] = sin(angle);
+            rotation.data[2][2] = cos(angle);
+        }
+        if(axis.y() == 1) {
+            rotation.data[0][0] = cos(angle);
+            rotation.data[0][2] = sin(angle);
+            rotation.data[2][0] = -sin(angle);
+            rotation.data[2][2] = cos(angle);
+        }
+         if(axis.z() == 1) {
+            rotation.data[0][0] = cos(angle);
+            rotation.data[0][1] = -sin(angle);
+            rotation.data[1][0] = sin(angle);
+            rotation.data[1][1] = cos(angle);
+        }
+
+        this->data = ((*this * rotation * to_origin) * *this).data;
+    }
+
+    void mat4::rotate_axis(float angle, vec4 axis) {
+        mat4 to_origin = math::invert(*this);
+
+        mat4 rotation{1.f};
+        angle = (angle * M_PI) / 180;
+        float a = cos(angle);
+
         float t1 = axis.z() / axis.x();
         mat4 m1{1.f};
         m1.data[0][0] = cos(t1);
@@ -98,7 +127,7 @@ namespace math {
         m5.data[0][2] = -m5.data[0][2];
         m5.data[2][0] = -m5.data[2][0];
 
-        this->data = ((*this * m5 * m4 * rotation * m2 * m1 * to_origin) * *this).data;
+        this->data = ((*this * rotation * to_origin) * *this).data;
     }
 
     void mat4::invert() {
@@ -189,6 +218,8 @@ namespace math {
 
         return *this;
     }
+
+
 
     mat4 look_at(vec4 eye, vec4 lookat, vec4 up) {
         eye.w(1);
