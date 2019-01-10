@@ -76,8 +76,8 @@ int main(int argc, char *argv[]) {
     math::vec4 vector4{-20, 20, 0, 1.f};
     math::vec4 vector5{-20, -20, 0, 1.f};
 
-    math::vec4 vector6{-20, -20, 10, 1.f};
-    math::vec4 vector7{20, -20, 10, 1.f};
+    math::vec4 vector6{-20, -20, 20, 1.f};
+    math::vec4 vector7{20, -20, 20, 1.f};
     math::vec4 vector8{20, -20, 0, 1.f};
 
     mesh shape;
@@ -119,8 +119,10 @@ int main(int argc, char *argv[]) {
 
     float near_plane{0.1f};
     float far_plane{500.f};
-    float alpha{70.f};
+    float alpha{4.5f};
 
+    shape.location({0, 0, 50});
+    shape2.location({0, 0, 5});
     float a{0};
 
     while (!window.shouldClose()) {
@@ -128,9 +130,9 @@ int main(int argc, char *argv[]) {
 
       //  alpha += 0.1;
 
-       a += 0.005;
+        a += 0.005;
 
-        auto camera = math::look_at({0, 0, -1}, {0, 0, 0}, {0, 1, 0});
+        auto camera = math::look_at({0, 0, 0}, {0, 0, 50}, {0, 1, 0});
 
         math::mat4 projection{1};
         projection.data[0][0] = scale;
@@ -145,9 +147,11 @@ int main(int argc, char *argv[]) {
         renderer.projection(projection);
         renderer.view(camera);
         renderer.render(scene);
+        shape.rotation({i, 0, 0});
+        //shape.location({i, 0, 50});
        // shape.rotation({i, 0, 0});
       //  shape.scale({1.1f, 1.1f, 1.1f});
-        i += .1f;
+        i += .6f;
     }
 
     return 0;

@@ -18,6 +18,7 @@ namespace math {
             vec4 point_2 = points[i + 1];
 
             auto pvm = projection * view * model_matrix();
+
             point_1 = point_1.multiply(pvm);
             point_2 = point_2.multiply(pvm);
             std::cout << "\n------------------\n";
@@ -80,9 +81,9 @@ namespace math {
         model_matrix_ = std::make_unique<math::mat4>(1.f);
         model_matrix_->translate(location_);
         model_matrix_->scale(scale_);
-            model_matrix_->rotate(rotation_.x(), {1.f, 0.f, 0.f});
-            model_matrix_->rotate(rotation_.y(), {0.f, 1.f, 0.f});
-            model_matrix_->rotate(rotation_.z(), {0.f, 0.f, 1.f});
+        model_matrix_->rotate(rotation_.x(), {1.f, 0.f, 0.f});
+        //    model_matrix_->rotate(rotation_.y(), {0.f, 1.f, 0.f});
+        //    model_matrix_->rotate(rotation_.z(), {0.f, 0.f, 1.f});
 
         return *model_matrix_;
     }

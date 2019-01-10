@@ -63,24 +63,42 @@ namespace math {
         angle = (angle * M_PI) / 180;
         float a = cos(angle);
 
-        if (axis.x() == 1) {
-            rotation.data[1][1] = cos(angle);
-            rotation.data[1][2] = -sin(angle);
-            rotation.data[2][1] = sin(angle);
-            rotation.data[2][2] = cos(angle);
-        } else if (axis.y() == 1) {
-            rotation.data[0][0] = cos(angle);
-            rotation.data[2][0] = -sin(angle);
-            rotation.data[0][2] = sin(angle);
-            rotation.data[2][2] = cos(angle);
-        } else if (axis.z() == 1) {
-            rotation.data[0][0] = cos(angle);
-            rotation.data[0][1] = -sin(angle);
-            rotation.data[1][0] = sin(angle);
-            rotation.data[1][1] = cos(angle);
-        }
+        float t1 = axis.z() / axis.x();
+        mat4 m1{1.f};
+        m1.data[0][0] = cos(t1);
+        m1.data[0][2] = sin(t1);
+        m1.data[2][0] = -sin(t1);
+        m1.data[2][2] = cos(t1);
 
-        this->data = ((*this * rotation * to_origin) * *this).data;
+        axis.x(10);
+        axis.y(8);
+        axis.z(6);
+
+        auto a1 = sqrt((axis.x() * axis.x()) + (axis.z() * axis.z()));
+        auto a2 = sqrt((axis.x() * axis.x()) + (axis.y() * axis.y()) + (axis.z() * axis.z()));
+        auto cos1 = a1/a2;
+        auto sin1 = axis.y()/a2;
+
+        mat4 m2{1.f};
+        m2.data[0][0] = cos1;
+        m2.data[0][1] = sin1;
+        m2.data[1][0] = -sin1;
+        m2.data[1][1] = cos1;
+
+        rotation.data[1][1] = cos(angle);
+        rotation.data[1][2] = -sin(angle);
+        rotation.data[2][1] = sin(angle);
+        rotation.data[2][2] = cos(angle);
+
+        mat4 m4 = m2;
+        m4.data[0][1] = -m4.data[0][1];
+        m4.data[1][0] = -m4.data[1][0];
+
+        mat4 m5 = m1;
+        m5.data[0][2] = -m5.data[0][2];
+        m5.data[2][0] = -m5.data[2][0];
+
+        this->data = ((*this * m5 * m4 * rotation * m2 * m1 * to_origin) * *this).data;
     }
 
     void mat4::invert() {
@@ -201,9 +219,11 @@ namespace math {
         camera.data[2][2] = direction.z();
 
         mat4 eye_m{1.f};
-        eye_m.data[3][0] = -eye.x();
-        eye_m.data[3][1] = -eye.y();
-        eye_m.data[3][2] = -eye.z();
+        eye_m.data[0][3] = -eye.x();
+        eye_m.data[1][3] = -eye.y();
+        eye_m.data[2][3] = -eye.z();
+
+        std::cout << eye_m.toString();
 
         return camera * eye_m;
     }
