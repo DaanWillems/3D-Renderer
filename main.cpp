@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <game/input_manager.h>
+#include <ui/mesh_loader.h>
+#include <game/cube.h>
 
 #ifdef _WIN32
 
@@ -66,11 +68,6 @@ int main(int argc, char *argv[]) {
   std::cout << "---------\n";
   std::cout << matrix.toString() << std::endl;
 
-
-  math::vec4 v1{2.f, 4.f};
-  math::vec4 v2{3.f, 2.f};
-  std::cout << "Dot: " << v1.dot(v2) << "\n";
-
   math::vec4 vector1{-20, -20, 0, 1.f};
   math::vec4 vector2{20, -20, 0, 1.f};
   math::vec4 vector3{20, 20, 0, 1.f};
@@ -81,52 +78,27 @@ int main(int argc, char *argv[]) {
   math::vec4 vector7{20, -20, 20, 1.f};
   math::vec4 vector8{20, -20, 0, 1.f};
 
-  mesh shape;
-  shape.points.push_back(vector1);
-  shape.points.push_back(vector2);
-  shape.points.push_back(vector3);
-  shape.points.push_back(vector4);
-  shape.points.push_back(vector5);
-  shape.points.push_back(vector6);
-  shape.points.push_back(vector7);
-  shape.points.push_back(vector8);
-
-//    mesh.model_matrix(matrix);
-  //   shape.model_matrix(std::move(matrix));
-  //mesh.multiply(matrix);
-
-
   float i = 0.f;
-
-  mesh shape2;
-  shape2.points.push_back(vector1);
-  shape2.points.push_back(vector2);
-  shape2.points.push_back(vector3);
-  shape2.points.push_back(vector4);
-  shape2.points.push_back(vector5);
-  shape2.points.push_back(vector6);
-  shape2.points.push_back(vector7);
-  shape2.points.push_back(vector8);
 
   //shape2.location(vec4{-70.f, 0.f});
   //shape2.rotation({40.f, 40.f});
   grid grid{};
 
+  auto obj{ui::mesh_loader().make_mesh(game::suzanne)};
 
-  scene.renderables.push_back(&shape);
-  scene.renderables.push_back(&shape2);
-  // scene.renderables.push_back(&grid);
+  scene.renderables.push_back(&obj);
 
   float near_plane{0.1f};
   float far_plane{500.f};
-  float alpha{4.5f};
+  float alpha{1.5f};
 
-  shape.location({0, 0, 50});
-  shape2.location({0, 0, 5});
+  obj.location({0, 0, 5});
+//  cube2.location({0, 0, 50});
+//  shape2.location({0, 0, 5});
   game::input_manager input;
 
-  math::vec4 eye{0, 0, 0};
-  math::vec4 lookat{0, 0, 50};
+  math::vec4 eye{0, 0, 10};
+  math::vec4 lookat{0, 0, 0};
 
   while (!window.shouldClose()) {
     float scale = 1 / (tan((alpha / 2) * (M_PI / 180)));
@@ -137,27 +109,27 @@ int main(int argc, char *argv[]) {
      */
     if (input.is_key_pressed(game::key::PAGEUP)) {
       eye.data[1] += 0.1f;
-      lookat.data[1] += 0.1f;
+//      lookat.data[1] += 0.1f;
     }
     if (input.is_key_pressed(game::key::PAGEDOWN)) {
       eye.data[1] -= 0.1f;
-      lookat.data[1] -= 0.1f;
+//      lookat.data[1] -= 0.1f;
     }
     if (input.is_key_pressed(game::key::LEFT)) {
       eye.data[0] += 0.1f;
-      lookat.data[0] += 0.1f;
+//      lookat.data[0] += 0.1f;
     }
     if (input.is_key_pressed(game::key::RIGHT)) {
       eye.data[0] -= 0.1f;
-      lookat.data[0] -= 0.1f;
+//      lookat.data[0] -= 0.1f;
     }
     if (input.is_key_pressed(game::key::UP)) {
       eye.data[2] += 0.1;
-      lookat.data[2] += 0.1;
+//      lookat.data[2] += 0.1;
     }
     if (input.is_key_pressed(game::key::DOWN)) {
       eye.data[2] -= 0.1;
-      lookat.data[2] -= 0.1f;
+//      lookat.data[2] -= 0.1f;
     }
 
     auto camera = math::look_at(eye, lookat, {0, 1, 0});
@@ -171,12 +143,10 @@ int main(int argc, char *argv[]) {
     projection.data[3][3] = 0.f;
     projection.data[2][3] = -1.f;
 
-    std::cout << projection.toString()+"\n";
     renderer.projection(projection);
     renderer.view(camera);
     renderer.render(scene);
-    shape.rotation({i, 0, 0});
-    //shape.location({i, 0, 50});
+//    obj.location({i, 0, 50});
     // shape.rotation({i, 0, 0});
     //  shape.scale({1.1f, 1.1f, 1.1f});
     i += .6f;

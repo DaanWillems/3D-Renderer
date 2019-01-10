@@ -35,22 +35,22 @@ namespace math {
         scale.data[1][1] += other.data[1];
         scale.data[2][2] += other.data[2];
 
-        std::cout << this->toString();
-        std::cout << "-----------\n";
-        std::cout << scale.toString();
-        std::cout << "-----------\n";
-        std::cout << to_origin.toString();
-        std::cout << "-----------\n";
-
-        std::cout << "test:\n";
-        auto test = *this * scale;
-        std::cout << test.toString();
-        std::cout << "-----------\n";
-
-        std::cout << "test2:\n";
-        auto test2 = test * to_origin;
-        std::cout << test2.toString();
-        std::cout << "-----------\n";
+//        std::cout << this->toString();
+//        std::cout << "-----------\n";
+//        std::cout << scale.toString();
+//        std::cout << "-----------\n";
+//        std::cout << to_origin.toString();
+//        std::cout << "-----------\n";
+//
+//        std::cout << "test:\n";
+//        auto test = *this * scale;
+//        std::cout << test.toString();
+//        std::cout << "-----------\n";
+//
+//        std::cout << "test2:\n";
+//        auto test2 = test * to_origin;
+//        std::cout << test2.toString();
+//        std::cout << "-----------\n";
 
         this->data = ((*this * scale * to_origin) * *this).data;
     }
@@ -254,7 +254,7 @@ namespace math {
         eye_m.data[1][3] = -eye.y();
         eye_m.data[2][3] = -eye.z();
 
-        std::cout << eye_m.toString();
+//        std::cout << eye_m.toString();
 
         return camera * eye_m;
     }

@@ -146,12 +146,12 @@ namespace math {
             }
             new_vector.data[i] = value;
         }
-        std::cout << new_vector.toString();
+//        std::cout << new_vector.toString();
         return new_vector;
     }
 
     std::string vec4::toString() {
-        std::string result = "";
+        std::string result{};
         result.append(std::to_string(x()));
         result.append(" | ");
         result.append(std::to_string(y()));
@@ -159,6 +159,7 @@ namespace math {
         result.append(std::to_string(z()));
         result.append(" | ");
         result.append(std::to_string(w()));
+        result.append("\n");
         return result;
     }
 

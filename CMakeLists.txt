@@ -9,5 +9,24 @@ set(SDL2_PATH "C:/SDL2")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR} include)
 
-add_executable(RDAlgebra2 main.cpp src/math/vec4.cpp include/math/vec4.h src/math/grid.cpp include/math/grid.h src/ui/renderer.cpp include/ui/renderer.h include/ui/renderable.h src/ui/scene.cpp include/ui/scene.h include/ui/vector_renderable.h src/ui/sdl/window.cpp include/ui/sdl/window.h src/ui/sdl/frame.cpp include/ui/sdl/frame.h include/ui/grid_renderable.h include/math/mat4.h src/math/mat4.cpp include/math/mesh.h src/math/mesh.cpp include/game/input_manager.h include/game/key.h src/game/input_manager.cpp)
+if(MSVC)
+    add_compile_options(/W3)
+else()
+    #    add_compile_options(-Wall -Wpedantic)
+    set(CMAKE_CXX_FLAGS_DEBUG "-g")
+    set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+endif()
+
+add_executable(RDAlgebra2 main.cpp
+        src/math/vec4.cpp
+        src/math/grid.cpp
+        src/ui/renderer.cpp
+        src/ui/scene.cpp
+        src/ui/sdl/window.cpp
+        src/ui/sdl/frame.cpp
+        src/math/mat4.cpp
+        src/math/mesh.cpp
+        src/game/input_manager.cpp
+        src/ui/mesh_loader.cpp
+        src/math/complex_mesh.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME} ${SDL2_LIBRARY})
