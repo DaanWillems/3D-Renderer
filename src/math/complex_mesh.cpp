@@ -71,8 +71,8 @@ namespace math {
     model_matrix_->translate(location_);
     model_matrix_->scale(scale_);
    // model_matrix_->rotate(45, {0.f, 1.f, 0.f});
-    model_matrix_->rotate_axis(rotation_.x(), {0.f, 0.f, 1.f});
-    model_matrix_->rotate_axis(45, {1.f, 0.f, 0.f});
+   // model_matrix_->rotate_axis(rotation_.x(), {0.f, 0.f, 1.f});
+    model_matrix_->rotate_axis(rotation_.x(), {1.f, 0.f, 0.f});
     //model_matrix_->rotate(45, {0.f, 1.f, 0.f});
     //model_matrix_->rotate(rotation_.y(), {0.f, 1.f, 0.f});
    // model_matrix_->rotate(rotation_.z(), {0.f, 0.f, 1.f});

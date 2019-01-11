@@ -71,8 +71,10 @@ int main(int argc, char *argv[]) {
 
     game::input_manager input;
 
-    math::vec4 eye{0, 0, 20};
+    math::vec4 eye{0, 20, 20};
     math::vec4 lookat{0, 0, 0};
+
+    obj.scale({1.5f, 1.5f, 1.5f});
 
     while (!window.shouldClose()) {
         float scale = 1 / (tan((alpha / 2) * (M_PI / 180)));
@@ -81,6 +83,7 @@ int main(int argc, char *argv[]) {
          * maar omdat het erop lijkt dat het perspectief een beetje raar doet als ik het wel doe,
          * laat ik het erin. (wow wat een lange zin)
          */
+
         if (input.is_key_pressed(game::key::PAGEUP)) {
             eye.data[1] += 0.1f;
             lookat.data[1] += 0.1f;
@@ -122,7 +125,6 @@ int main(int argc, char *argv[]) {
         renderer.render(scene);
         obj.rotation({i, 0, 0});
         obj.location({0, 1, -1});
-   //     obj.scale({1.f, 1.f, 1.f});
         i += 2.f;
     }
 
