@@ -28,5 +28,5 @@ add_executable(RDAlgebra2 main.cpp
         src/math/mesh.cpp
         src/game/input_manager.cpp
         src/ui/mesh_loader.cpp
-        src/math/complex_mesh.cpp src/game/game_object.cpp src/game/spaceship.cpp)
+        src/math/complex_mesh.cpp src/game/game_object.cpp src/game/spaceship.cpp include/game/projectile.h)
 target_link_libraries(${CMAKE_PROJECT_NAME} ${SDL2_LIBRARY})

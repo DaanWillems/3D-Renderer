@@ -74,6 +74,7 @@ namespace math {
   math::mat4 &complex_mesh::model_matrix() {
     model_matrix_ = std::make_unique<math::mat4>(1.f);
     model_matrix_->translate(location_);
+    model_matrix_->scale(scale_);
 
     //model_matrix_->rotate_axis(rotation_.x()/50, {0.f, 0.f, 1.f});
    // model_matrix_->rotate_axis(45, {0.f, 0.f, 1.f});

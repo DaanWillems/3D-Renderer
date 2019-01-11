@@ -18,6 +18,7 @@ namespace game {
     I,
     K,
     L,
+    SPACE,
     NUM1,
     NUM2,
     NUM3,
