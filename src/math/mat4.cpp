@@ -123,8 +123,6 @@ namespace math {
             m1.data[2][2] = cos(t1);
         }
 
-        std::cout << m1.toString();
-
         mat4 m2{1.f};
 
         if (point.y() != 0) {
@@ -148,13 +146,9 @@ namespace math {
         m4.data[0][1] = -m4.data[0][1];
         m4.data[1][0] = -m4.data[1][0];
 
-        std::cout << m4.toString() + "\n";
-
         mat4 m5 = m1;
         m5.data[0][2] = -m5.data[0][2];
         m5.data[2][0] = -m5.data[2][0];
-
-        std::cout << m5.toString() + "\n";
 
         this->data = ((m5 * m4 * rotation * m2 * m1) * *this).data;
     }
