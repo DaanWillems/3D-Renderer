@@ -34,26 +34,9 @@ namespace math {
         mat4 to_origin = math::invert(*this);
         mat4 scale{1};
 
-        scale.data[0][0] = other.data[0];
-        scale.data[1][1] = other.data[1];
-        scale.data[2][2] = other.data[2];
-
-//        std::cout << this->toString();
-//        std::cout << "-----------\n";
-//        std::cout << scale.toString();
-//        std::cout << "-----------\n";
-//        std::cout << to_origin.toString();
-//        std::cout << "-----------\n";
-//
-//        std::cout << "test:\n";
-//        auto test = *this * scale;
-//        std::cout << test.toString();
-//        std::cout << "-----------\n";
-//
-//        std::cout << "test2:\n";
-//        auto test2 = test * to_origin;
-//        std::cout << test2.toString();
-//        std::cout << "-----------\n";
+        scale.data[0][0] += other.data[0];
+        scale.data[1][1] += other.data[1];
+        scale.data[2][2] += other.data[2];
 
         this->data = ((*this * scale * to_origin) * *this).data;
     }
@@ -150,7 +133,7 @@ namespace math {
         m5.data[0][2] = -m5.data[0][2];
         m5.data[2][0] = -m5.data[2][0];
 
-        this->data = ((m5 * m4 * rotation * m2 * m1) * *this).data;
+        this->data = ((*this * m5 * m4 * rotation * m2 * m1 * to_origin) * *this).data;
     }
 
     void mat4::invert() {

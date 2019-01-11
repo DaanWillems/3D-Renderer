@@ -60,8 +60,8 @@ int main(int argc, char *argv[]) {
 
     grid grid{};
 
-    auto obj{ui::mesh_loader().make_mesh(game::cube)};
-    obj.location({0, 0, 5});
+    auto obj{ui::mesh_loader().make_mesh(game::cubic_cube)};
+    obj.location({0, 0, 20});
 
     scene.renderables.push_back(&obj);
 
@@ -71,10 +71,9 @@ int main(int argc, char *argv[]) {
 
     game::input_manager input;
 
-    math::vec4 eye{0, 20, 20};
+    math::vec4 eye{0, 0, 40};
     math::vec4 lookat{0, 0, 0};
 
-    obj.scale({1.5f, 1.5f, 1.5f});
 
     while (!window.shouldClose()) {
         float scale = 1 / (tan((alpha / 2) * (M_PI / 180)));
@@ -124,9 +123,243 @@ int main(int argc, char *argv[]) {
         renderer.view(camera);
         renderer.render(scene);
         obj.rotation({i, 0, 0});
-        obj.location({0, 1, -1});
-        i += 2.f;
+        //obj.location({0, 1, -1});
+        i += 0.1f;
     }
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
