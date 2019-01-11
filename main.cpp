@@ -86,6 +86,7 @@ int main(int argc, char *argv[]) {
 
   auto obj{ui::mesh_loader().make_mesh(game::cubic_cube)};
 
+
   scene.renderables.push_back(&obj);
 
   float near_plane{0.1f};
@@ -130,27 +131,27 @@ int main(int argc, char *argv[]) {
     }
     if (input.is_key_pressed(game::key::DOWN)) {
       eye.data[2] -= 1.f;
-//      lookat.data[2] -= 0.1f;
     }
 
-    auto camera = math::look_at(eye, lookat, {0, 1, 0});
+      auto camera = math::look_at(eye, lookat, {0, 1, 0});
 
-    math::mat4 projection{1};
-    projection.data[0][0] = scale;
-    projection.data[1][1] = scale;
-    projection.data[2][2] = -far_plane / (far_plane - near_plane);
-    projection.data[3][2] = -far_plane * near_plane / (far_plane - near_plane);
+      math::mat4 projection{1};
+      projection.data[0][0] = scale;
+      projection.data[1][1] = scale;
+      projection.data[2][2] = -far_plane / (far_plane - near_plane);
+      projection.data[3][2] = -far_plane * near_plane / (far_plane - near_plane);
 
-    projection.data[3][3] = 0.f;
-    projection.data[2][3] = -1.f;
+      projection.data[3][3] = 0.f;
+      projection.data[2][3] = -1.f;
 
-    renderer.projection(projection);
-    renderer.view(camera);
-    renderer.render(scene);
-//    obj.location({i, 0, 50});
-    // shape.rotation({i, 0, 0});
-//    obj.scale({1.1f, i, 1.1f});
-    i += .00001f;
+      renderer.projection(projection);
+      renderer.view(camera);
+      renderer.render(scene);
+      obj.rotation({i, 0, 0});
+      obj.location({0, 1, -1});
+      //     obj.scale({1.f, 1.f, 1.f});
+      i += 2.f;
+
   }
 
   return 0;

@@ -81,9 +81,9 @@ namespace math {
         model_matrix_ = std::make_unique<math::mat4>(1.f);
         model_matrix_->translate(location_);
         model_matrix_->scale(scale_);
+      //  model_matrix_->rotate(rotation_.x(), {1.f, 0.f, 0.f});
         model_matrix_->rotate(rotation_.x(), {0.f, 1.f, 0.f});
-        //model_matrix_->rotate(rotation_.x(), {0.f, 1.f, 0.f});
-        //model_matrix_->rotate(rotation_.x(), {0.f, 0.f, 1.f});
+        model_matrix_->rotate(rotation_.x(), {0.f, 0.f, 1.f});
 
         return *model_matrix_;
     }
