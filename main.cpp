@@ -17,6 +17,7 @@
 #include <game/input_manager.h>
 #include <ui/mesh_loader.h>
 #include <game/cube.h>
+#include <game/spaceship.h>
 
 #ifdef _WIN32
 
@@ -84,16 +85,16 @@ int main(int argc, char *argv[]) {
   //shape2.rotation({40.f, 40.f});
   grid grid{};
 
-  auto obj{ui::mesh_loader().make_mesh(game::paperplane2)};
+//  auto obj{ui::mesh_loader().make_mesh(game::paperplane2)};
+  game::spaceship spaceship{};
 
-
-  scene.renderables.push_back(&obj);
+  scene.renderables.push_back(&spaceship);
 
   float near_plane{0.1f};
   float far_plane{500.f};
   float alpha{1.5f};
 
-  obj.location({0, 0, 5});
+  spaceship.location({0, 0, 5});
   game::input_manager input;
 
   math::vec4 eye{0, 0, 20};
@@ -127,6 +128,33 @@ int main(int argc, char *argv[]) {
       lookat.data[2] += 0.1f;
     }
 
+    auto& loc{spaceship.location()};
+    auto& rot{spaceship.rotation()};
+    if (input.is_key_pressed(game::key::A)) {
+      loc.data[0] += 0.1f;
+    }
+    if (input.is_key_pressed(game::key::D)) {
+      loc.data[0] -= 0.1f;
+    }
+    if (input.is_key_pressed(game::key::W)) {
+      loc.data[2] += 0.1f;
+    }
+    if (input.is_key_pressed(game::key::S)) {
+      loc.data[2] -= 0.1f;
+    }
+    if (input.is_key_pressed(game::key::Q)) {
+      rot.data[1] += 0.1f;
+    }
+    if (input.is_key_pressed(game::key::E)) {
+      rot.data[1] -= 0.1f;
+    }
+    if (input.is_key_pressed(game::key::Z)) {
+      rot.data[0] += 0.1f;
+    }
+    if (input.is_key_pressed(game::key::X)) {
+      rot.data[0] -= 0.1f;
+    }
+
     auto camera = math::look_at(eye, lookat, {0, 1, 0});
 
     math::mat4 projection{1};
@@ -138,12 +166,14 @@ int main(int argc, char *argv[]) {
     projection.data[3][3] = 0.f;
     projection.data[2][3] = -1.f;
 
+    std::cout << spaceship.location().toString();
+
     renderer.projection(projection);
     renderer.view(camera);
     renderer.render(scene);
-    obj.rotation({i, 0, 0});
-    obj.location({0, 1, -1});
-     obj.scale({50.f, 50.f, 50.f});
+//    obj.rotation({i, 0, 0});
+//    obj.location({0, 1, -1});
+     spaceship.scale({50.f, 50.f, 50.f});
 
     i += .2f;
   }
