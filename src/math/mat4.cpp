@@ -38,7 +38,13 @@ namespace math {
         scale.data[1][1] += other.data[1];
         scale.data[2][2] += other.data[2];
 
-        this->data = ((*this * scale * to_origin) * *this).data;
+        mat4 return_m{1.f};
+
+        return_m.data[0][3] = this->data[0][3];
+        return_m.data[1][3] = this->data[1][3];
+        return_m.data[2][3] = this->data[2][3];
+
+        this->data = ((return_m * scale * to_origin) * *this).data;
     }
 
 
@@ -75,7 +81,13 @@ namespace math {
             r3.data[1][1] = cos(angle);
         }
 
-        this->data = ((*this * r1 * r2 * r3 * to_origin) * *this).data;
+        mat4 return_m{1.f};
+
+        return_m.data[0][3] = this->data[0][3];
+        return_m.data[1][3] = this->data[1][3];
+        return_m.data[2][3] = this->data[2][3];
+
+        this->data = ((return_m * r1 * r2 * r3 * to_origin) * *this).data;
     }
 
     void mat4::rotate_axis(float angle, vec4 point) {
@@ -95,7 +107,7 @@ namespace math {
 
         if (point.z() != 0) {
             float t1{0.f};
-            if(point.x() != 0) {
+            if (point.x() != 0) {
                 t1 = point.z() / point.x();
             } else {
                 t1 = (90 * M_PI) / 180;
@@ -133,7 +145,13 @@ namespace math {
         m5.data[0][2] = -m5.data[0][2];
         m5.data[2][0] = -m5.data[2][0];
 
-        this->data = ((*this * m5 * m4 * rotation * m2 * m1 * to_origin) * *this).data;
+        mat4 return_m{1.f};
+
+        return_m.data[0][3] = this->data[0][3];
+        return_m.data[1][3] = this->data[1][3];
+        return_m.data[2][3] = this->data[2][3];
+
+        this->data = ((return_m * m5 * m4 * rotation * m2 * m1 * to_origin) * *this).data;
     }
 
     void mat4::invert() {

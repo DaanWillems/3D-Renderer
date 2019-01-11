@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     grid grid{};
 
     auto obj{ui::mesh_loader().make_mesh(game::cubic_cube)};
-    obj.location({0, 0, 20});
+    obj.location({0, 0, 0});
 
     scene.renderables.push_back(&obj);
 
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
 
     game::input_manager input;
 
-    math::vec4 eye{0, 0, 40};
+    math::vec4 eye{0, 60, 20};
     math::vec4 lookat{0, 0, 0};
 
 
@@ -123,7 +123,6 @@ int main(int argc, char *argv[]) {
         renderer.view(camera);
         renderer.render(scene);
         obj.rotation({i, 0, 0});
-        //obj.location({0, 1, -1});
         i += 0.1f;
     }
 

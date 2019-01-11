@@ -17,6 +17,7 @@ namespace math {
   }
 
   void complex_mesh::draw(ui::sdl::frame &frame, math::mat4 projection, math::mat4 view) {
+ //   std::cout << "--------\n";
     for (const auto &face : faces) {
       for (int i = 0; i < face.size(); ++i) {
         vec4 point_1 = points[face[i]];
@@ -33,6 +34,9 @@ namespace math {
           break;
         }
 
+    //    std::cout << std::to_string(point_1.w()) + "\n";
+    //    std::cout << std::to_string(point_2.w()) + "\n";
+
         if (point_1.w() != 0) {
           point_1.x((1.f / 2.f) + (point_1.x() / point_1.w()) * (1.f / 2.f));
           point_1.y((1.f / 2.f) + (point_1.y() / point_1.w()) * (1.f / 2.f));
@@ -47,6 +51,7 @@ namespace math {
                        static_cast<int>(point_2.x()), static_cast<int>(point_2.y()));
       }
     }
+ //   std::cout << "----------\n";
   }
 
   void complex_mesh::multiply(mat4 &other) {
@@ -71,8 +76,9 @@ namespace math {
     model_matrix_->translate(location_);
 
     //model_matrix_->rotate_axis(rotation_.x()/50, {0.f, 0.f, 1.f});
-    model_matrix_->rotate_axis(45, {0.f, 0.f, 1.f});
-    model_matrix_->rotate_axis(45, {1.f, 1.f, 0.f});
+   // model_matrix_->rotate_axis(45, {0.f, 0.f, 1.f});
+    model_matrix_->rotate_axis(45, {1.f, 0.f, 0.f});
+    //model_matrix_->rotate_axis(rotation_.x(), {0.f, 1.f, 1.f});
  //   model_matrix_->rotate(0, {0.f, 1.f, 0.f});
     //model_matrix_->rotate(rotation_.x(), {1.f, 0.f, 0.f});
 
