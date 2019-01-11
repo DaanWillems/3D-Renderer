@@ -56,6 +56,7 @@ int main(int argc, char *argv[]) {
   renderer renderer{window};
   scene scene{};
 
+  <<<<<<< HEAD
   math::mat4 matrix{1.f};
   auto vectorScale = math::vec4{2.f, 2.f, 2.f};
   auto vectorTranslate = math::vec4{80.f, 80.f, 80.f};
@@ -85,6 +86,15 @@ int main(int argc, char *argv[]) {
   grid grid{};
 
   auto obj{ui::mesh_loader().make_mesh(game::cubic_cube)};
+  =======
+  float i = 0.f;
+
+  grid
+  grid{};
+
+  auto obj{ui::mesh_loader().make_mesh(game::cube)};
+  obj.location({0, 0, 5});
+  >>>>>>> 8fbfa3cc3099953797e42c5357a6628d0219bc4a
 
 
   scene.renderables.push_back(&obj);
@@ -94,64 +104,58 @@ int main(int argc, char *argv[]) {
   float alpha{1.5f};
 
   obj.location({0, 0, 5});
-//  cube2.location({0, 0, 50});
-//  shape2.location({0, 0, 5});
   game::input_manager input;
 
-  math::vec4 eye{0, 0, 10};
+  math::vec4 eye{0, 0, 20};
   math::vec4 lookat{0, 0, 0};
-  math::vec4 obj_scale{1.f, 1.f, 1.f};
 
   while (!window.shouldClose()) {
     float scale = 1 / (tan((alpha / 2) * (static_cast<float>(M_PI) / 180)));
 
-    /* Volgens de opdracht is het volgens mij niet nodig om ook de lookat te wijzigen,
-     * maar omdat het erop lijkt dat het perspectief een beetje raar doet als ik het wel doe,
-     * laat ik het erin. (wow wat een lange zin)
-     */
     if (input.is_key_pressed(game::key::PAGEUP)) {
-      eye.data[1] += 1.f;
-//      lookat.data[1] += 1.f;
+      eye.data[1] += 0.1f;
+      lookat.data[1] += 0.1f;
     }
     if (input.is_key_pressed(game::key::PAGEDOWN)) {
-      eye.data[1] -= 1.f;
-//      lookat.data[1] -= 0.1f;
+      eye.data[1] -= 0.1f;
+      lookat.data[1] -= 0.1f;
     }
     if (input.is_key_pressed(game::key::LEFT)) {
-      eye.data[0] += 1.f;
-//      lookat.data[0] += 1.f;
+      eye.data[0] += 0.1f;
+      lookat.data[0] += 0.1f;
     }
     if (input.is_key_pressed(game::key::RIGHT)) {
-      eye.data[0] -= 1.f;
-//      lookat.data[0] -= 0.1f;
+      eye.data[0] -= 0.1f;
+      lookat.data[0] -= 0.1f;
     }
     if (input.is_key_pressed(game::key::UP)) {
-      eye.data[2] += 1.f;
-//      lookat.data[2] += 0.1;
+      eye.data[2] += 0.1f;
+      lookat.data[2] += 0.1f;
     }
     if (input.is_key_pressed(game::key::DOWN)) {
-      eye.data[2] -= 1.f;
+      eye.data[2] -= 0.1f;
+      lookat.data[2] += 0.1f;
     }
 
-      auto camera = math::look_at(eye, lookat, {0, 1, 0});
+    auto camera = math::look_at(eye, lookat, {0, 1, 0});
 
-      math::mat4 projection{1};
-      projection.data[0][0] = scale;
-      projection.data[1][1] = scale;
-      projection.data[2][2] = -far_plane / (far_plane - near_plane);
-      projection.data[3][2] = -far_plane * near_plane / (far_plane - near_plane);
+    math::mat4 projection{1};
+    projection.data[0][0] = scale;
+    projection.data[1][1] = scale;
+    projection.data[2][2] = -far_plane / (far_plane - near_plane);
+    projection.data[3][2] = -far_plane * near_plane / (far_plane - near_plane);
 
-      projection.data[3][3] = 0.f;
-      projection.data[2][3] = -1.f;
+    projection.data[3][3] = 0.f;
+    projection.data[2][3] = -1.f;
 
-      renderer.projection(projection);
-      renderer.view(camera);
-      renderer.render(scene);
-      obj.rotation({i, 0, 0});
-      obj.location({0, 1, -1});
-      //     obj.scale({1.f, 1.f, 1.f});
-      i += 2.f;
+    renderer.projection(projection);
+    renderer.view(camera);
+    renderer.render(scene);
+    obj.rotation({i, 0, 0});
+    obj.location({0, 1, -1});
+    // obj.scale({1.f, 1.f, 1.f});
 
+    i += 2.f;
   }
 
   return 0;

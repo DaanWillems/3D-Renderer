@@ -21,13 +21,6 @@ namespace math {
 
             point_1 = point_1.multiply(pvm);
             point_2 = point_2.multiply(pvm);
-            std::cout << "\n------------------\n";
-            std::cout << pvm.toString();
-
-            std::cout << "\n=--=-=-=--=\n";
-            std::cout << point_1.toString() + "\n";
-            std::cout << point_2.toString() + "\n";
-            std::cout << "=--=-=-=--=\n";
 
             if (point_1.w() < 0 || point_2.w() < 0) {
                 return;
@@ -52,10 +45,6 @@ namespace math {
 //                point_2.x(point_2.x() / point_2.w());
 //                point_2.x(point_2.y() / point_2.w());
 //            }
-            std::cout << "\n=--=-=-=--=\n";
-            std::cout << point_1.toString() + "\n";
-            std::cout << point_2.toString() + "\n";
-            std::cout << "=--=-=-=--=\n";
             frame.drawLine(point_1.x(), point_1.y(), point_2.x(), point_2.y());
         }
     }
@@ -65,8 +54,6 @@ namespace math {
         for (int i = 0; i < points.size(); i++) {
             newShape.points.push_back(points[i].multiply(other));
         }
-        std::cout << newShape.points[0].toString();
-        std::cout << this->points[0].toString().c_str();
         this->points = newShape.points;
     }
 
