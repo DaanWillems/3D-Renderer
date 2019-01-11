@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
   //shape2.rotation({40.f, 40.f});
   grid grid{};
 
-  auto obj{ui::mesh_loader().make_mesh(game::suzanne)};
+  auto obj{ui::mesh_loader().make_mesh(game::cubic_cube)};
 
   scene.renderables.push_back(&obj);
 
@@ -99,38 +99,40 @@ int main(int argc, char *argv[]) {
 
   math::vec4 eye{0, 0, 10};
   math::vec4 lookat{0, 0, 0};
+  math::vec4 obj_scale{1.f, 1.f, 1.f};
 
   while (!window.shouldClose()) {
-    float scale = 1 / (tan((alpha / 2) * (M_PI / 180)));
+    float scale = 1 / (tan((alpha / 2) * (static_cast<float>(M_PI) / 180)));
 
     /* Volgens de opdracht is het volgens mij niet nodig om ook de lookat te wijzigen,
      * maar omdat het erop lijkt dat het perspectief een beetje raar doet als ik het wel doe,
      * laat ik het erin. (wow wat een lange zin)
      */
     if (input.is_key_pressed(game::key::PAGEUP)) {
-      eye.data[1] += 0.1f;
-//      lookat.data[1] += 0.1f;
+      eye.data[1] += 1.f;
+//      lookat.data[1] += 1.f;
     }
     if (input.is_key_pressed(game::key::PAGEDOWN)) {
-      eye.data[1] -= 0.1f;
+      eye.data[1] -= 1.f;
 //      lookat.data[1] -= 0.1f;
     }
     if (input.is_key_pressed(game::key::LEFT)) {
-      eye.data[0] += 0.1f;
-//      lookat.data[0] += 0.1f;
+      eye.data[0] += 1.f;
+//      lookat.data[0] += 1.f;
     }
     if (input.is_key_pressed(game::key::RIGHT)) {
-      eye.data[0] -= 0.1f;
+      eye.data[0] -= 1.f;
 //      lookat.data[0] -= 0.1f;
     }
     if (input.is_key_pressed(game::key::UP)) {
-      eye.data[2] += 0.1;
+      eye.data[2] += 1.f;
 //      lookat.data[2] += 0.1;
     }
     if (input.is_key_pressed(game::key::DOWN)) {
-      eye.data[2] -= 0.1;
+      eye.data[2] -= 1.f;
 //      lookat.data[2] -= 0.1f;
     }
+
 
 
     auto camera = math::look_at(eye, lookat, {0, 1, 0});
@@ -149,8 +151,8 @@ int main(int argc, char *argv[]) {
     renderer.render(scene);
 //    obj.location({i, 0, 50});
     // shape.rotation({i, 0, 0});
-    //  shape.scale({1.1f, 1.1f, 1.1f});
-    i += .6f;
+//    obj.scale({1.1f, i, 1.1f});
+    i += .00001f;
   }
 
   return 0;

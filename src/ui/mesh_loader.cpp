@@ -21,14 +21,22 @@ math::complex_mesh ui::mesh_loader::make_mesh(std::string object) const {
         continue;
       }
     } else if (type == 'f') {
-      int v1{};
-      int v2{};
-      int v3{};
-      if (ss >> v1 >> v2 >> v3) {
-        mesh.faces.push_back({v1 - 1, v2 - 1, v3 - 1});
-        continue;
+      std::vector<int> faces;
+      int v{};
+      while (ss >> v) {
+        faces.push_back(v - 1);
       }
+      if (!faces.empty()) {
+        mesh.faces.push_back(faces);
+        ss.clear();
+        continue;
+      } else {
+        std::cout << "WTF";
+        break;
+      }
+      std::cout << "WTF2";
     }
+    std::cout << "WTF3";
     break;
   }
 

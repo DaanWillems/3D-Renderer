@@ -11,7 +11,7 @@ namespace math {
       complex_mesh();
       std::vector<vec4> points;
       // Dit zou een vec4 kunnen zijn, maar een float is niet precies genoeg voor indices
-      std::vector<std::array<int, 3>> faces;
+      std::vector<std::vector<int>> faces;
         void draw(ui::sdl::frame& frame, math::mat4 projection, math::mat4 view_) override;
         math::mat4& model_matrix() override;
 
