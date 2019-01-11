@@ -22,7 +22,7 @@ namespace math {
         void translate(math::vec4& other);
         void scale(math::vec4 other);
         void rotate(float angle, vec4 axis);
-        void rotate_axis(float angle, vec4 axis);
+        void rotate_axis(float angle, vec4 point);
         void invert();
 
         mat4 operator+(const mat4 &other) const;

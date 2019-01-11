@@ -36,121 +36,122 @@ using namespace ui::sdl;
 int main(int argc, char *argv[]) {
 #ifdef _WIN32
 
-  AllocConsole();
+    AllocConsole();
 
-  HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
-  int hCrt = _open_osfhandle((long) handle_out, _O_TEXT);
-  FILE *hf_out = _fdopen(hCrt, "w");
-  setvbuf(hf_out, NULL, _IONBF, 1);
-  *stdout = *hf_out;
+    HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
+    int hCrt = _open_osfhandle((long) handle_out, _O_TEXT);
+    FILE *hf_out = _fdopen(hCrt, "w");
+    setvbuf(hf_out, NULL, _IONBF, 1);
+    *stdout = *hf_out;
 
-  HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
-  hCrt = _open_osfhandle((long) handle_in, _O_TEXT);
-  FILE *hf_in = _fdopen(hCrt, "r");
-  setvbuf(hf_in, NULL, _IONBF, 128);
-  *stdin = *hf_in;
+    HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
+    hCrt = _open_osfhandle((long) handle_in, _O_TEXT);
+    FILE *hf_in = _fdopen(hCrt, "r");
+    setvbuf(hf_in, NULL, _IONBF, 128);
+    *stdin = *hf_in;
 #endif
-  ui::sdl::window window{};
-  window.init("Test", SCREEN_WIDTH, SCREEN_HEIGHT, 10, 10);
+    ui::sdl::window window{};
+    window.init("Test", SCREEN_WIDTH, SCREEN_HEIGHT, 10, 10);
 
-  renderer renderer{window};
-  scene scene{};
+    renderer renderer{window};
+    scene scene{};
 
-  math::mat4 matrix{1.f};
-  auto vectorScale = math::vec4{2.f, 2.f, 2.f};
-  auto vectorTranslate = math::vec4{80.f, 80.f, 80.f};
+    math::mat4 matrix{1.f};
+    auto vectorScale = math::vec4{2.f, 2.f, 2.f};
+    auto vectorTranslate = math::vec4{80.f, 80.f, 80.f};
 
-  matrix.translate(vectorTranslate);
-  matrix.rotate(40, vec4{1, 0, 0});
-  matrix.rotate(40, vec4{0, 0, 1});
+    matrix.translate(vectorTranslate);
+    matrix.rotate(40, vec4{1, 0, 0});
+    matrix.rotate(40, vec4{0, 0, 1});
 //    matrix.scale(vectorScale);
 
-  std::cout << "---------\n";
-  std::cout << matrix.toString() << std::endl;
+    std::cout << "---------\n";
+    std::cout << matrix.toString() << std::endl;
 
-  math::vec4 vector1{-20, -20, 0, 1.f};
-  math::vec4 vector2{20, -20, 0, 1.f};
-  math::vec4 vector3{20, 20, 0, 1.f};
-  math::vec4 vector4{-20, 20, 0, 1.f};
-  math::vec4 vector5{-20, -20, 0, 1.f};
+    math::vec4 vector1{-20, -20, 0, 1.f};
+    math::vec4 vector2{20, -20, 0, 1.f};
+    math::vec4 vector3{20, 20, 0, 1.f};
+    math::vec4 vector4{-20, 20, 0, 1.f};
+    math::vec4 vector5{-20, -20, 0, 1.f};
 
-  math::vec4 vector6{-20, -20, 20, 1.f};
-  math::vec4 vector7{20, -20, 20, 1.f};
-  math::vec4 vector8{20, -20, 0, 1.f};
+    math::vec4 vector6{-20, -20, 20, 1.f};
+    math::vec4 vector7{20, -20, 20, 1.f};
+    math::vec4 vector8{20, -20, 0, 1.f};
 
-  float i = 0.f;
+    float i = 0.f;
 
-  //shape2.location(vec4{-70.f, 0.f});
-  //shape2.rotation({40.f, 40.f});
-  grid grid{};
+    //shape2.location(vec4{-70.f, 0.f});
+    //shape2.rotation({40.f, 40.f});
+    grid grid{};
 
-  auto obj{ui::mesh_loader().make_mesh(game::suzanne)};
+    auto obj{ui::mesh_loader().make_mesh(game::cube)};
 
-  scene.renderables.push_back(&obj);
+    scene.renderables.push_back(&obj);
 
-  float near_plane{0.1f};
-  float far_plane{500.f};
-  float alpha{1.5f};
+    float near_plane{0.1f};
+    float far_plane{500.f};
+    float alpha{1.5f};
 
-  obj.location({0, 0, 5});
+    obj.location({0, 0, 5});
 //  cube2.location({0, 0, 50});
 //  shape2.location({0, 0, 5});
-  game::input_manager input;
+    game::input_manager input;
 
-  math::vec4 eye{0, 0, 10};
-  math::vec4 lookat{0, 0, 0};
+    math::vec4 eye{0, 0, 20};
+    math::vec4 lookat{0, 0, 0};
 
-  while (!window.shouldClose()) {
-    float scale = 1 / (tan((alpha / 2) * (M_PI / 180)));
 
-    /* Volgens de opdracht is het volgens mij niet nodig om ook de lookat te wijzigen,
-     * maar omdat het erop lijkt dat het perspectief een beetje raar doet als ik het wel doe,
-     * laat ik het erin. (wow wat een lange zin)
-     */
-    if (input.is_key_pressed(game::key::PAGEUP)) {
-      eye.data[1] += 0.1f;
+    while (!window.shouldClose()) {
+        float scale = 1 / (tan((alpha / 2) * (M_PI / 180)));
+
+        /* Volgens de opdracht is het volgens mij niet nodig om ook de lookat te wijzigen,
+         * maar omdat het erop lijkt dat het perspectief een beetje raar doet als ik het wel doe,
+         * laat ik het erin. (wow wat een lange zin)
+         */
+        if (input.is_key_pressed(game::key::PAGEUP)) {
+            eye.data[1] += 0.1f;
 //      lookat.data[1] += 0.1f;
-    }
-    if (input.is_key_pressed(game::key::PAGEDOWN)) {
-      eye.data[1] -= 0.1f;
+        }
+        if (input.is_key_pressed(game::key::PAGEDOWN)) {
+            eye.data[1] -= 0.1f;
 //      lookat.data[1] -= 0.1f;
-    }
-    if (input.is_key_pressed(game::key::LEFT)) {
-      eye.data[0] += 0.1f;
+        }
+        if (input.is_key_pressed(game::key::LEFT)) {
+            eye.data[0] += 0.1f;
 //      lookat.data[0] += 0.1f;
-    }
-    if (input.is_key_pressed(game::key::RIGHT)) {
-      eye.data[0] -= 0.1f;
+        }
+        if (input.is_key_pressed(game::key::RIGHT)) {
+            eye.data[0] -= 0.1f;
 //      lookat.data[0] -= 0.1f;
-    }
-    if (input.is_key_pressed(game::key::UP)) {
-      eye.data[2] += 0.1;
+        }
+        if (input.is_key_pressed(game::key::UP)) {
+            eye.data[2] += 0.1;
 //      lookat.data[2] += 0.1;
-    }
-    if (input.is_key_pressed(game::key::DOWN)) {
-      eye.data[2] -= 0.1;
+        }
+        if (input.is_key_pressed(game::key::DOWN)) {
+            eye.data[2] -= 0.1;
 //      lookat.data[2] -= 0.1f;
+        }
+
+        auto camera = math::look_at(eye, lookat, {0, 1, 0});
+
+        math::mat4 projection{1};
+        projection.data[0][0] = scale;
+        projection.data[1][1] = scale;
+        projection.data[2][2] = -far_plane / (far_plane - near_plane);
+        projection.data[3][2] = -far_plane * near_plane / (far_plane - near_plane);
+
+        projection.data[3][3] = 0.f;
+        projection.data[2][3] = -1.f;
+
+        renderer.projection(projection);
+        renderer.view(camera);
+        renderer.render(scene);
+        obj.rotation({i, 0, 0});
+        obj.location({0, 1, -1});
+   //     obj.scale({1.f, 1.f, 1.f});
+        i += 2.f;
     }
 
-    auto camera = math::look_at(eye, lookat, {0, 1, 0});
-
-    math::mat4 projection{1};
-    projection.data[0][0] = scale;
-    projection.data[1][1] = scale;
-    projection.data[2][2] = -far_plane / (far_plane - near_plane);
-    projection.data[3][2] = -far_plane * near_plane / (far_plane - near_plane);
-
-    projection.data[3][3] = 0.f;
-    projection.data[2][3] = -1.f;
-
-    renderer.projection(projection);
-    renderer.view(camera);
-    renderer.render(scene);
-//    obj.location({i, 0, 50});
-    // shape.rotation({i, 0, 0});
-    //  shape.scale({1.1f, 1.1f, 1.1f});
-    i += .6f;
-  }
-
-  return 0;
+    return 0;
 }

@@ -5,10 +5,13 @@
 
 namespace math {
     mat4 invert(mat4 mat) {
-        mat.data[0][3] = -mat.data[0][3];
-        mat.data[1][3] = -mat.data[1][3];
-        mat.data[2][3] = -mat.data[2][3];
-        return mat;
+        mat4 result{1.f};
+
+        result.data[0][3] = -mat.data[0][3];
+        result.data[1][3] = -mat.data[1][3];
+        result.data[2][3] = -mat.data[2][3];
+
+        return result;
     }
 
     mat4::mat4(float initValue) : rows{4}, columns{4} {
@@ -60,59 +63,81 @@ namespace math {
         mat4 to_origin = math::invert(*this);
 
         mat4 rotation{1.f};
+
+        float a1;
+
+        mat4 r1{1.f};
+        mat4 r2{1.f};
+        mat4 r3{1.f};
+
         angle = (angle * M_PI) / 180;
         float a = cos(angle);
 
-        if(axis.x() == 1) {
-            rotation.data[1][1] = cos(angle);
-            rotation.data[1][2] = -sin(angle);
-            rotation.data[2][1] = sin(angle);
-            rotation.data[2][2] = cos(angle);
+        if (axis.x() == 1) {
+            r1.data[1][1] = cos(angle);
+            r1.data[1][2] = -sin(angle);
+            r1.data[2][1] = sin(angle);
+            r1.data[2][2] = cos(angle);
         }
-        if(axis.y() == 1) {
-            rotation.data[0][0] = cos(angle);
-            rotation.data[0][2] = sin(angle);
-            rotation.data[2][0] = -sin(angle);
-            rotation.data[2][2] = cos(angle);
+        if (axis.y() == 1) {
+            r2.data[0][0] = cos(angle);
+            r2.data[0][2] = sin(angle);
+            r2.data[2][0] = -sin(angle);
+            r2.data[2][2] = cos(angle);
         }
-         if(axis.z() == 1) {
-            rotation.data[0][0] = cos(angle);
-            rotation.data[0][1] = -sin(angle);
-            rotation.data[1][0] = sin(angle);
-            rotation.data[1][1] = cos(angle);
+        if (axis.z() == 1) {
+            r3.data[0][0] = cos(angle);
+            r3.data[0][1] = -sin(angle);
+            r3.data[1][0] = sin(angle);
+            r3.data[1][1] = cos(angle);
         }
 
-        this->data = ((*this * rotation * to_origin) * *this).data;
+        this->data = ((*this * r1 * r2 * r3 * to_origin) * *this).data;
     }
 
-    void mat4::rotate_axis(float angle, vec4 axis) {
+    void mat4::rotate_axis(float angle, vec4 point) {
         mat4 to_origin = math::invert(*this);
+
+//        point.x(10);
+//        point.y(8);
+//        point.z(6);
 
         mat4 rotation{1.f};
         angle = (angle * M_PI) / 180;
         float a = cos(angle);
 
-        float t1 = axis.z() / axis.x();
         mat4 m1{1.f};
-        m1.data[0][0] = cos(t1);
-        m1.data[0][2] = sin(t1);
-        m1.data[2][0] = -sin(t1);
-        m1.data[2][2] = cos(t1);
 
-        axis.x(10);
-        axis.y(8);
-        axis.z(6);
+        //t1 = 31;
 
-        auto a1 = sqrt((axis.x() * axis.x()) + (axis.z() * axis.z()));
-        auto a2 = sqrt((axis.x() * axis.x()) + (axis.y() * axis.y()) + (axis.z() * axis.z()));
-        auto cos1 = a1/a2;
-        auto sin1 = axis.y()/a2;
+        if (point.z() != 0) {
+            float t1{0.f};
+            if(point.x() != 0) {
+                t1 = point.z() / point.x();
+            } else {
+                t1 = (90 * M_PI) / 180;
+            }
+            m1.data[0][0] = cos(t1);
+            m1.data[0][2] = sin(t1);
+            m1.data[2][0] = -sin(t1);
+            m1.data[2][2] = cos(t1);
+        }
+
+        std::cout << m1.toString();
 
         mat4 m2{1.f};
-        m2.data[0][0] = cos1;
-        m2.data[0][1] = sin1;
-        m2.data[1][0] = -sin1;
-        m2.data[1][1] = cos1;
+
+        if (point.y() != 0) {
+            auto a1 = sqrt((point.x() * point.x()) + (point.z() * point.z()));
+            auto a2 = sqrt((point.x() * point.x()) + (point.y() * point.y()) + (point.z() * point.z()));
+            auto cos1 = a1 / a2;
+            auto sin1 = point.y() / a2;
+
+            m2.data[0][0] = cos1;
+            m2.data[0][1] = sin1;
+            m2.data[1][0] = -sin1;
+            m2.data[1][1] = cos1;
+        }
 
         rotation.data[1][1] = cos(angle);
         rotation.data[1][2] = -sin(angle);
@@ -123,11 +148,15 @@ namespace math {
         m4.data[0][1] = -m4.data[0][1];
         m4.data[1][0] = -m4.data[1][0];
 
+        std::cout << m4.toString() + "\n";
+
         mat4 m5 = m1;
         m5.data[0][2] = -m5.data[0][2];
         m5.data[2][0] = -m5.data[2][0];
 
-        this->data = ((*this * rotation * to_origin) * *this).data;
+        std::cout << m5.toString() + "\n";
+
+        this->data = ((m5 * m4 * rotation * m2 * m1) * *this).data;
     }
 
     void mat4::invert() {
@@ -218,7 +247,6 @@ namespace math {
 
         return *this;
     }
-
 
 
     mat4 look_at(vec4 eye, vec4 lookat, vec4 up) {
