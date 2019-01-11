@@ -56,7 +56,6 @@ int main(int argc, char *argv[]) {
   renderer renderer{window};
   scene scene{};
 
-  <<<<<<< HEAD
   math::mat4 matrix{1.f};
   auto vectorScale = math::vec4{2.f, 2.f, 2.f};
   auto vectorTranslate = math::vec4{80.f, 80.f, 80.f};
@@ -85,16 +84,7 @@ int main(int argc, char *argv[]) {
   //shape2.rotation({40.f, 40.f});
   grid grid{};
 
-  auto obj{ui::mesh_loader().make_mesh(game::cubic_cube)};
-  =======
-  float i = 0.f;
-
-  grid
-  grid{};
-
-  auto obj{ui::mesh_loader().make_mesh(game::cube)};
-  obj.location({0, 0, 5});
-  >>>>>>> 8fbfa3cc3099953797e42c5357a6628d0219bc4a
+  auto obj{ui::mesh_loader().make_mesh(game::paperplane2)};
 
 
   scene.renderables.push_back(&obj);
@@ -153,9 +143,9 @@ int main(int argc, char *argv[]) {
     renderer.render(scene);
     obj.rotation({i, 0, 0});
     obj.location({0, 1, -1});
-    // obj.scale({1.f, 1.f, 1.f});
+     obj.scale({50.f, 50.f, 50.f});
 
-    i += 2.f;
+    i += .2f;
   }
 
   return 0;
