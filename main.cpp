@@ -108,6 +108,8 @@ int main(int argc, char *argv[]) {
   auto start = std::chrono::system_clock::now();
   auto stop = std::chrono::system_clock::now();
 
+  spaceship.scale({150.f, 150.f, 150.f});
+
   while (!window.shouldClose()) {
 
     auto delta_time_clock = stop-start;

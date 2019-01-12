@@ -34,9 +34,9 @@ namespace math {
         mat4 to_origin = math::invert(*this);
         mat4 scale{1};
 
-        scale.data[0][0] += other.data[0];
-        scale.data[1][1] += other.data[1];
-        scale.data[2][2] += other.data[2];
+        scale.data[0][0] = other.data[0];
+        scale.data[1][1] = other.data[1];
+        scale.data[2][2] = other.data[2];
 
         mat4 return_m{1.f};
 
