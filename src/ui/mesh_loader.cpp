@@ -4,7 +4,7 @@
 #include <iostream>
 #include <math/vec4.h>
 
-math::complex_mesh ui::mesh_loader::make_mesh(std::string object) const {
+math::complex_mesh ui::mesh_loader::make_mesh(std::string object) {
   math::complex_mesh mesh{};
 
 

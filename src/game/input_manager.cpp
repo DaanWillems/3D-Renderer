@@ -17,6 +17,9 @@ namespace game {
     keyMap[key::I] = SDL_SCANCODE_I;
     keyMap[key::K] = SDL_SCANCODE_K;
     keyMap[key::L] = SDL_SCANCODE_L;
+    keyMap[key::Z] = SDL_SCANCODE_Z;
+    keyMap[key::X] = SDL_SCANCODE_X;
+    keyMap[key::SPACE] = SDL_SCANCODE_SPACE;
     keyMap[key::F3] = SDL_SCANCODE_F3;
     keyMap[key::NUM1] = SDL_SCANCODE_1;
     keyMap[key::NUM2] = SDL_SCANCODE_2;

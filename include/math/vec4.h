@@ -34,6 +34,7 @@ class vec4: public ui::renderable {
 
         vec4 operator+(const vec4 other);
         vec4 operator-(const vec4 other);
+        vec4 operator-(const float other);
         vec4 operator*(const float scale);
 
         vec4 operator+=(const vec4 other);
@@ -45,6 +46,7 @@ class vec4: public ui::renderable {
         vec4 cross(const vec4 &other) const;
         float length() const;
         vec4 normalize();
+        vec4 truncate(float max);
 
         std::string toString();
         void draw(ui::sdl::frame& frame, math::mat4 projection, math::mat4 view_) override;
@@ -53,5 +55,6 @@ class vec4: public ui::renderable {
     };
 
     vec4 normalize(vec4 v);
+    vec4 truncate(vec4 v, float max);
 }
 
