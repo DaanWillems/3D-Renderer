@@ -33,3 +33,34 @@ TEST(Matrix4, Non_Equality_Operator) {
 
   EXPECT_TRUE(m1 != m2);
 }
+
+TEST(Matrix4, Translate) {
+  math::mat4 matrix{1.f};
+  matrix.data[0][3] = 1.f;
+  matrix.data[1][3] = 2.f;
+  matrix.data[2][3] = 3.f;
+  matrix.data[3][3] = 4.f;
+  math::vec4 translation{1.f, 2.f, 3.f, 4.f};
+
+  matrix.translate(translation);
+
+  math::mat4 expected{1.f};
+  expected.data[0][3] = 2.f;
+  expected.data[1][3] = 4.f;
+  expected.data[2][3] = 6.f;
+  expected.data[3][3] = 8.f;
+  EXPECT_EQ(true, matrix == expected);
+}
+
+TEST(Matrix4, Invert) {
+  math::mat4 matrix{1.f};
+
+  matrix.invert();
+
+  math::mat4 expected{1.f};
+  matrix.data[0][0] *= -1.f;
+  matrix.data[1][1] *= -1.f;
+  matrix.data[2][2] *= -1.f;
+  matrix.data[3][3] *= -1.f;
+  EXPECT_EQ(true, matrix == expected);
+}
