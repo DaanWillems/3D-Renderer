@@ -37,14 +37,17 @@ namespace math {
           //    std::cout << std::to_string(point_1.w()) + "\n";
           //    std::cout << std::to_string(point_2.w()) + "\n";
 
+          float width = 1.f;
+          float height = 1.f;
+
           if (point_1.w() != 0) {
-            point_1.x((1.f / 2.f) + (point_1.x() / point_1.w()) * (1.f / 2.f));
-            point_1.y((1.f / 2.f) + (point_1.y() / point_1.w()) * (1.f / 2.f));
+            point_1.x((width / 2.f) + (point_1.x() / point_1.w()) * (width / 2.f));
+            point_1.y((height / 2.f) + (point_1.y() / point_1.w()) * (height / 2.f));
           }
 
           if (point_2.w() != 0) {
-            point_2.x((1.f / 2.f) + (point_2.x() / point_2.w()) * (1.f / 2.f));
-            point_2.y((1.f / 2.f) + (point_2.y() / point_2.w()) * (1.f / 2.f));
+            point_2.x((width / 2.f) + (point_2.x() / point_2.w()) * (width / 2.f));
+            point_2.y((height / 2.f) + (point_2.y() / point_2.w()) * (height / 2.f));
           }
 
           frame.drawLine(static_cast<int>(point_1.x()), static_cast<int>(point_1.y()),
@@ -59,26 +62,18 @@ namespace math {
       for (int i = 0; i < points.size(); i++) {
         newShape.points.push_back(points[i].multiply(other));
       }
-//    std::cout << newShape.points[0].toString();
-//    std::cout << this->points[0].toString().c_str();
       this->points = newShape.points;
-    }
-
-    std::string complex_mesh::toString() const {
-//        return std::accumulate(points.begin(), points.end(), std::string{""} ,[&](auto& result, vec4& cur) {
-//            return result + cur.toString();
-//        });
-      return "";
     }
 
     math::mat4 &complex_mesh::model_matrix() {
       model_matrix_ = std::make_unique<math::mat4>(1.f);
       model_matrix_->scale(scale_);
-      //model_matrix_->rotate_axis(180, {1.f, 0.f, 0.f});
 
-      model_matrix_->rotate_axis(rotation_.z(), {0.f, 0.f, 1.f});
-      model_matrix_->rotate_axis(rotation_.y(), {0.f, 1.f, 0.f});
-      model_matrix_->rotate_axis(rotation_.x(), {1.f, 0.f, 0.f});
+      model_matrix_->rotate_axis(rotation_.z(), {0, 0, 1});
+
+      model_matrix_->rotate_axis(rotation_.y(), {0, 1, 0});
+
+      model_matrix_->rotate_axis(rotation_.x(), {1, 0, 0});
 
       model_matrix_->translate(location_);
 
@@ -92,7 +87,6 @@ namespace math {
     vec4 &complex_mesh::location() {
       return location_;
     }
-
     void complex_mesh::rotation(vec4 rotation) {
       rotation_ = std::move(rotation);
     }

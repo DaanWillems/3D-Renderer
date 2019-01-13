@@ -121,17 +121,13 @@ int main(int argc, char *argv[]) {
     start_time = std::chrono::system_clock::now();
     auto delta_time = std::chrono::duration_cast<std::chrono::microseconds>(start_time - last_time).count() / 100000.f;
     last_time = start_time;
-    /* Volgens de opdracht is het volgens mij niet nodig om ook de lookat te wijzigen,
-     * maar omdat het erop lijkt dat het perspectief een beetje raar doet als ik het wel doe,
-     * laat ik het erin. (wow wat een lange zin)
-     */
 
     spaceship.update(delta_time);
     planet.update(delta_time);
     spaceship.acceleration(vec4{0.f, 0.f, 0.f});
 
     if (planet.check_collision(spaceship)) {
-      //std::cout << "yeet\n";
+      std::cout << "Je hebt verloren!\n";
     }
 
     float camera_speed = 1.f;
