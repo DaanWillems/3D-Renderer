@@ -221,6 +221,12 @@ namespace math {
       return v;
     }
 
+    float dist(vec4 v1, vec4 v2) {
+      auto v3 = v2 - v1;
+      auto length = v3.length();
+      return length;
+    }
+
     vec4 truncate(vec4 v, float max) {
       auto length = v.length();
       if(length > max) {

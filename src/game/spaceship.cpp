@@ -4,8 +4,8 @@
 #include <iostream>
 #include <cmath>
 
-game::projectile game::spaceship::shoot() {
-  game::projectile projectile{};
+game::projectile game::spaceship::shoot(int id) {
+  game::projectile projectile{id};
 
   projectile.rotation(rotation());
   projectile.location(location());
@@ -30,7 +30,9 @@ void game::spaceship::update(float delta_time) {
   //velocity_.z(velocity_.z() + acceleration_.z());
 
   //Apply friction
-  velocity_ = velocity_ * friction_;
+  if(!decoupled_) { //Friction will help go the vehicle go the direction it is facing, when deoucpled is enabled the spaceship behaves more realistically
+    velocity_ = velocity_ * (1 - (friction_ * delta_time));
+  }
 
   //Truncate velocity;
   auto truncated_velocity = math::truncate(velocity_, max_speed_);
@@ -68,4 +70,20 @@ float game::spaceship::pitch() {
 
 void game::spaceship::pitch(float pitch) {
   pitch_ = pitch;
+}
+
+bool game::spaceship::decoupled() {
+  return decoupled_;
+}
+
+void game::spaceship::decoupled(bool uncoupled) {
+  decoupled_ = uncoupled;
+}
+
+math::vec4 game::spaceship::collision_location() {
+  return location();
+}
+
+float game::spaceship::collision_radius() {
+  return 20.f;
 }

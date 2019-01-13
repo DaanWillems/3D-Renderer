@@ -27,6 +27,8 @@
 #include <io.h>
 #include <windows.h>
 #include <cmath>
+#include <game/planet.h>
+#include <algorithm>
 
 #endif
 //Screen dimension constants
@@ -73,13 +75,15 @@ int main(int argc, char *argv[]) {
 
   acc = acc.multiply(r2);
 
-  std::cout << acc.toString();
 
   grid grid{};
 
   game::spaceship spaceship{};
+  game::planet planet{};
+  planet.location({0.f, 0.f, -70.f});
 
   scene.renderables.push_back(&spaceship);
+  scene.renderables.push_back(&planet);
 
   float near_plane{0.1f};
   float far_plane{500.f};
@@ -104,92 +108,137 @@ int main(int argc, char *argv[]) {
   renderer.projection(projection);
   std::list<game::projectile> projectiles{};
   bool can_shoot{true};
+  bool can_toggle_decouple{true};
 
-  auto start = std::chrono::system_clock::now();
-  auto stop = std::chrono::system_clock::now();
+  auto start_time = std::chrono::system_clock::now();
+  auto last_time = std::chrono::system_clock::now();
 
   spaceship.scale({150.f, 150.f, 150.f});
+  int p_id = 0;
 
   while (!window.shouldClose()) {
-
-    auto delta_time_clock = stop-start;
-    float delta_time = delta_time_clock.count()/10000000.f;
-    start = std::chrono::system_clock::now();
+    start_time = std::chrono::system_clock::now();
+    auto delta_time = std::chrono::duration_cast<std::chrono::microseconds>(start_time - last_time).count() / 100000.f;
+    last_time = start_time;
     /* Volgens de opdracht is het volgens mij niet nodig om ook de lookat te wijzigen,
      * maar omdat het erop lijkt dat het perspectief een beetje raar doet als ik het wel doe,
      * laat ik het erin. (wow wat een lange zin)
      */
 
     spaceship.update(delta_time);
-    std::cout << std::to_string(delta_time) + "\n";
+    planet.update(delta_time);
     spaceship.acceleration(vec4{0.f, 0.f, 0.f});
 
+    if (planet.check_collision(spaceship)) {
+      //std::cout << "yeet\n";
+    }
+
+    float camera_speed = 1.f;
+    float turn_speed{10.f};
+    float acceleration{3.f};
+
     if (input.is_key_pressed(game::key::PAGEUP)) {
-      eye.data[1] += 0.1f;
-      lookat.data[1] += 0.1f;
+      eye.data[1] += camera_speed;
+      lookat.data[1] += camera_speed;
     }
     if (input.is_key_pressed(game::key::PAGEDOWN)) {
-      eye.data[1] -= 0.1f;
-      lookat.data[1] -= 0.1f;
+      eye.data[1] -= camera_speed;
+      lookat.data[1] -= camera_speed;
     }
     if (input.is_key_pressed(game::key::LEFT)) {
-      eye.data[0] += 0.1f;
-      lookat.data[0] += 0.1f;
+      eye.data[0] += camera_speed;
+      lookat.data[0] += camera_speed;
     }
     if (input.is_key_pressed(game::key::RIGHT)) {
-      eye.data[0] -= 0.1f;
-      lookat.data[0] -= 0.1f;
+      eye.data[0] -= camera_speed;
+      lookat.data[0] -= camera_speed;
     }
     if (input.is_key_pressed(game::key::UP)) {
-      eye.data[2] += 0.1;
-      lookat.data[2] += 0.1;
+      eye.data[2] += camera_speed;
+      lookat.data[2] += camera_speed;
     }
     if (input.is_key_pressed(game::key::DOWN)) {
-      eye.data[2] -= 0.1;
-      lookat.data[2] -= 0.1f;
+      eye.data[2] -= camera_speed;
+      lookat.data[2] -= camera_speed;
     }
     auto &loc{spaceship.location()};
     auto &rot{spaceship.rotation()};
     if (input.is_key_pressed(game::key::A)) {
-      spaceship.yaw(spaceship.yaw() + 1.2f*delta_time);
+      spaceship.yaw(spaceship.yaw() + turn_speed * delta_time);
     }
     if (input.is_key_pressed(game::key::D)) {
-      spaceship.yaw(spaceship.yaw() - (1.2f*delta_time));
+      spaceship.yaw(spaceship.yaw() - (turn_speed * delta_time));
     }
     if (input.is_key_pressed(game::key::W)) {
       //loc.data[2] += 0.1f;
-      spaceship.acceleration(vec4{0.f, 0.f, 0.005f*-delta_time});
+      spaceship.acceleration(vec4{0.f, 0.f, acceleration * -delta_time});
     }
     if (input.is_key_pressed(game::key::S)) {
       //spaceship.acceleration(spaceship.acceleration() + vec4{0.f, 0.f, -0.001f / 100});
     }
     if (input.is_key_pressed(game::key::Q)) {
-      spaceship.roll(spaceship.roll()-1.2f*delta_time);
+      spaceship.roll(spaceship.roll() - turn_speed * delta_time);
     }
     if (input.is_key_pressed(game::key::E)) {
-      spaceship.roll(spaceship.roll()+1.2f*delta_time);
+      spaceship.roll(spaceship.roll() + turn_speed * delta_time);
     }
     if (input.is_key_pressed(game::key::Z)) {
-      spaceship.pitch(spaceship.pitch()-1.2f*delta_time);
+      spaceship.pitch(spaceship.pitch() - turn_speed * delta_time);
     }
     if (input.is_key_pressed(game::key::X)) {
-      spaceship.pitch(spaceship.pitch()+1.2f*delta_time);
+      spaceship.pitch(spaceship.pitch() + turn_speed * delta_time);
+    }
+    if (input.is_key_pressed(game::key::TAB)) {
+      if (can_toggle_decouple) {
+        spaceship.decoupled(!spaceship.decoupled());
+        can_toggle_decouple = false;
+      }
+    } else {
+      can_toggle_decouple = true;
     }
     if (input.is_key_pressed(game::key::SPACE)) {
+      math::vec4 dir{0.f, 0.f, 1.f};
+      math::mat4 rotate_{1.f};
+      rotate_.rotate_axis(spaceship.roll(), {0.f, 0.f, 1.f});
+      rotate_.rotate_axis(spaceship.yaw(), {0.f, 1.f, 0.f});
+      rotate_.rotate_axis(spaceship.pitch(), {1.f, 0.f, 0.f});
+
+      dir = dir.multiply(rotate_);
+
       if (can_shoot) {
         can_shoot = false;
-        projectiles.push_back(spaceship.shoot());
+        projectiles.push_back(spaceship.shoot(p_id++));
         scene.renderables.push_back(&projectiles.back());
+        projectiles.back().direction(dir);
       }
     } else {
       can_shoot = true;
     }
 
-    for (auto &projectile : projectiles) {
-      // TODO: Hier moet iets anders voor genomen worden, maar dit is tijdelijk.
-      projectile.location() += normalize(projectile.location()) * (0.1f*delta_time);
-     // std::cout << projectile.location().toString();
+    auto p = projectiles.begin();
+    while (p != projectiles.end()) {
+      if ((*p).expired()) {
+        auto it = scene.renderables.begin();
+        while(it != scene.renderables.end()) {
+          const auto p_proj = dynamic_cast<game::projectile *>((*it));
+          if(p_proj) {
+            if(p_proj->id() == (*p).id()) {
+              scene.renderables.erase(it);
+              break;
+            }
+          }
+          ++it;
+        }
+        p = projectiles.erase(p);
+      } else {
+        (*p).update(delta_time);
+        if ((*p).check_collision(planet)) {
+          std::cout << "Game is technically won\n";
+        }
+        ++p;
+      }
     }
+
     auto camera = math::look_at(eye, lookat, {0, 1, 0});
 
 
@@ -197,7 +246,6 @@ int main(int argc, char *argv[]) {
     renderer.render(scene);
     spaceship.rotation({i, 0, 0});
     i += 0.1f;
-    stop = std::chrono::system_clock::now();
   }
 
   return 0;
