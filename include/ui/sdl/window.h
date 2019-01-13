@@ -5,7 +5,7 @@
 #ifndef RDALGEBRA2_WINDOW_H
 #define RDALGEBRA2_WINDOW_H
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 namespace ui::sdl {
     class window {

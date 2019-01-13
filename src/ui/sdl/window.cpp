@@ -3,7 +3,7 @@
 //
 
 #include <ui/sdl/window.h>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 
 

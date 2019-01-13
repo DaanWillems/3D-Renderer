@@ -41,22 +41,8 @@ using namespace math;
 using namespace ui::sdl;
 
 int main(int argc, char *argv[]) {
-#ifdef _WIN32
 
-  AllocConsole();
 
-  HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
-  int hCrt = _open_osfhandle((long) handle_out, _O_TEXT);
-  FILE *hf_out = _fdopen(hCrt, "w");
-  setvbuf(hf_out, NULL, _IONBF, 1);
-  *stdout = *hf_out;
-
-  HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
-  hCrt = _open_osfhandle((long) handle_in, _O_TEXT);
-  FILE *hf_in = _fdopen(hCrt, "r");
-  setvbuf(hf_in, NULL, _IONBF, 128);
-  *stdin = *hf_in;
-#endif
   ui::sdl::window window{};
   window.init("Test", SCREEN_WIDTH, SCREEN_HEIGHT, 10, 10);
 
@@ -216,10 +202,10 @@ int main(int argc, char *argv[]) {
     while (p != projectiles.end()) {
       if ((*p).expired()) {
         auto it = scene.renderables.begin();
-        while(it != scene.renderables.end()) {
+        while (it != scene.renderables.end()) {
           const auto p_proj = dynamic_cast<game::projectile *>((*it));
-          if(p_proj) {
-            if(p_proj->id() == (*p).id()) {
+          if (p_proj) {
+            if (p_proj->id() == (*p).id()) {
               scene.renderables.erase(it);
               break;
             }

@@ -4,6 +4,7 @@
 #include <memory>
 #include "vec4.h"
 #include "mat4.h"
+#include "ui/sdl/frame.h"
 
 namespace math {
     class complex_mesh: public ui::renderable  {

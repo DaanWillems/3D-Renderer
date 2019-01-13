@@ -7,11 +7,7 @@
 #ifndef RDALGEBRA2_RENDERABLE_H
 #define RDALGEBRA2_RENDERABLE_H
 
-namespace ui {
-    namespace sdl {
-        class frame;
-    }
-}
+#include "ui/sdl/frame.h"
 
 
 namespace math {

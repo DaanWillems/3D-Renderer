@@ -9,6 +9,7 @@ namespace math {
 #include "math/mat4.h"
 #include <vector>
 #include <string>
+#include "ui/sdl/frame.h"
 
 namespace ui {
     namespace sdl {
