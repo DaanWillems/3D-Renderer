@@ -37,6 +37,10 @@ namespace math {
 
         mat4 operator*=(const mat4 &other);
 
+        bool operator==(const mat4 &other);
+
+        bool operator!=(const mat4 &other);
+
         std::string toString() const;
 
         std::vector<std::vector<float>> data;

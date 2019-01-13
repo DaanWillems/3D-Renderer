@@ -243,8 +243,23 @@ namespace math {
         return *this;
     }
 
+bool mat4::operator==(const mat4 &other) {
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < columns; j++) {
+      if (data[i][j] != other.data[i][j])
+        return false;
+    }
+  }
+  return true;
+}
 
-    mat4 look_at(vec4 eye, vec4 lookat, vec4 up) {
+
+bool mat4::operator!=(const mat4 &other) {
+  return !(*this == other);
+}
+
+
+mat4 look_at(vec4 eye, vec4 lookat, vec4 up) {
         eye.w(1);
         lookat.w(1);
         up.w(1);
