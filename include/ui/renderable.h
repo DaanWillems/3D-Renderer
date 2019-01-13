@@ -2,11 +2,17 @@
 // Created by solaw on 05/11/2018.
 //
 
-#include <ui/sdl/frame.h>
 #include <memory>
 
 #ifndef RDALGEBRA2_RENDERABLE_H
 #define RDALGEBRA2_RENDERABLE_H
+
+namespace ui {
+    namespace sdl {
+        class frame;
+    }
+}
+
 
 namespace math {
   class mat4;

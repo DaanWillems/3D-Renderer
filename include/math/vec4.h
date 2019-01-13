@@ -5,10 +5,21 @@ namespace math {
 }
 
 #include <ui/renderable.h>
-#include <ui/sdl/frame.h>
+//#include <ui/sdl/frame.h>
 #include "math/mat4.h"
 #include <vector>
 #include <string>
+
+namespace ui {
+    namespace sdl {
+        class frame;
+    }
+}
+
+namespace ui {
+    namespace sdl {
+    }
+}
 
 namespace math {
 class vec4: public ui::renderable {
