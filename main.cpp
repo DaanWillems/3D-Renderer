@@ -19,6 +19,7 @@
 #include <ui/mesh_loader.h>
 #include <game/cube.h>
 #include <game/spaceship.h>
+#include <game/planet.h>
 #include <chrono>
 #include <ctime>
 
