@@ -8,7 +8,7 @@ TEST(Matrix4, Equality_Operator) {
   math::mat4 m2{1.f};
   std::random_device rd{};
   std::mt19937 gen{rd()};
-  std::uniform_real_distribution<> dist(0, 10);
+  std::uniform_real_distribution<float> dist(0, 10);
   for(int x = 0; x < m1.data.size(); ++x) {
     for(int y = 0; y < m1.data[x].size(); ++y) {
       m1.data[x][y] = m2.data[x][y] = dist(gen);
@@ -23,7 +23,7 @@ TEST(Matrix4, Non_Equality_Operator) {
   math::mat4 m2{1.f};
   std::random_device rd{};
   std::mt19937 gen{rd()};
-  std::uniform_real_distribution<> dist(0, 10);
+  std::uniform_real_distribution<float> dist(0, 10);
   for(int x = 0; x < m1.data.size(); ++x) {
     for(int y = 0; y < m1.data[x].size(); ++y) {
       m1.data[x][y] = m2.data[x][y] = dist(gen);
@@ -49,7 +49,7 @@ TEST(Matrix4, Translate) {
   expected.data[1][3] = 4.f;
   expected.data[2][3] = 6.f;
   expected.data[3][3] = 8.f;
-  EXPECT_EQ(true, matrix == expected);
+  EXPECT_EQ(matrix, expected);
 }
 
 TEST(Matrix4, Invert) {
@@ -62,5 +62,17 @@ TEST(Matrix4, Invert) {
   matrix.data[1][1] *= -1.f;
   matrix.data[2][2] *= -1.f;
   matrix.data[3][3] *= -1.f;
-  EXPECT_EQ(true, matrix == expected);
+  EXPECT_EQ(matrix, expected);
+}
+
+TEST(Matrix4, RotateX) {
+  math::mat4 matrix{1.f};
+  math::vec4 target{1.f, 0.f, 0.f};
+
+  matrix.rotate_axis(90, {0.f, 0.f, 0.1f});
+
+  target = target.multiply(matrix);
+
+  math::vec4 expected{0.f, -1.f, 0.f};
+  EXPECT_EQ(true, target == expected);
 }

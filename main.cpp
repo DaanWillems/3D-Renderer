@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
       std::cout << "Je hebt verloren!\n";
     }
 
-    float camera_speed = 1.f;
+    float camera_speed{1.f};
     float turn_speed{10.f};
     float acceleration{3.f};
 

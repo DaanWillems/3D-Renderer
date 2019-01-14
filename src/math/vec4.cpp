@@ -145,7 +145,7 @@ namespace math {
       frame.draw_rectangle(static_cast<int>(x() - 3), static_cast<int>(y() + 3), 6, 6);
     }
 
-    vec4 vec4::multiply(mat4 &matrix) {
+    vec4 vec4::multiply(mat4 &matrix) const {
       vec4 new_vector{0.f, 0.f, 0.f, 1.f};
       for (int i = 0; i < matrix.rows; i++) {
         float value = 0;
@@ -212,8 +212,20 @@ namespace math {
       return *this;
     }
 
+  bool vec4::operator==(const vec4 other) {
+    for (int i = 0; i < data.size(); i++) {
+        if (data[i] != other.data[i])
+          return false;
+    }
+    return true;
+  }
 
-    vec4 normalize(vec4 v) {
+  bool vec4::operator!=(const vec4 other) {
+    return !(*this == other)
+  }
+
+
+  vec4 normalize(vec4 v) {
       auto length = v.length();
       for (int i = 0; i < v.data.size(); i++) {
         v.data[i] = v.data[i] / length;
