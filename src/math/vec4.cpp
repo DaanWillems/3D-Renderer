@@ -221,7 +221,7 @@ namespace math {
   }
 
   bool vec4::operator!=(const vec4 other) {
-    return !(*this == other)
+    return !(*this == other);
   }
 
 
