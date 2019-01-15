@@ -105,22 +105,22 @@ namespace math {
 
         //t1 = 31;
 
-        if (point.z() != 0) {
-            float t1{0.f};
-            if (point.x() != 0) {
-                t1 = point.z() / point.x();
-            } else {
-                t1 = (90 * M_PI) / 180;
-            }
-            m1.data[0][0] = cos(t1);
-            m1.data[0][2] = sin(t1);
-            m1.data[2][0] = -sin(t1);
-            m1.data[2][2] = cos(t1);
+        float t1{0.f};
+        if (point.x() != 0.f && point.z() != 0) {
+            t1 = point.z() / point.x();
+        } else {
+            t1 = (90 * M_PI) / 180;
         }
+        m1.data[0][0] = cos(t1);
+        m1.data[0][2] = sin(t1);
+        m1.data[2][0] = -sin(t1);
+        m1.data[2][2] = cos(t1);
+
+        auto t = point.multiply(m1);
 
         mat4 m2{1.f};
 
-        if (point.y() != 0) {
+        if (point.y() != 0.f) {
             auto a1 = sqrt((point.x() * point.x()) + (point.z() * point.z()));
             auto a2 = sqrt((point.x() * point.x()) + (point.y() * point.y()) + (point.z() * point.z()));
             auto cos1 = a1 / a2;
@@ -243,23 +243,23 @@ namespace math {
         return *this;
     }
 
-bool mat4::operator==(const mat4 &other) {
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < columns; j++) {
-      if (data[i][j] != other.data[i][j])
-        return false;
+    bool mat4::operator==(const mat4 &other) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (data[i][j] != other.data[i][j])
+                    return false;
+            }
+        }
+        return true;
     }
-  }
-  return true;
-}
 
 
-bool mat4::operator!=(const mat4 &other) {
-  return !(*this == other);
-}
+    bool mat4::operator!=(const mat4 &other) {
+        return !(*this == other);
+    }
 
 
-mat4 look_at(vec4 eye, vec4 lookat, vec4 up) {
+    mat4 look_at(vec4 eye, vec4 lookat, vec4 up) {
         eye.w(1);
         lookat.w(1);
         up.w(1);
