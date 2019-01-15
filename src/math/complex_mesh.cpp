@@ -1,11 +1,3 @@
-#include <utility>
-
-#include <utility>
-
-//
-// Created by Daan on 23/11/2018.
-//
-
 #include <math/complex_mesh.h>
 #include <iostream>
 #include <algorithm>
@@ -17,44 +9,47 @@ namespace math {
     }
 
     void complex_mesh::draw(ui::sdl::frame &frame, math::mat4 projection, math::mat4 view) {
-        //   std::cout << "--------\n";
+        auto pvm = projection * view * model_matrix();
+
+        math::vec4 origin{0.f, 0.f, 0.f, 1.f};
+        math::vec4 x_axis{.5f, 0.f, 0.f, 1.f};
+        math::vec4 y_axis{0.0f, .5f, 0.f, 1.f};
+        math::vec4 z_axis{0.f, 0.f, .5f, 1.f};
+
+        draw_points(x_axis, origin, frame, pvm, {255.f, 0.f, 0.f});
+        draw_points(z_axis, origin, frame, pvm, {0.f, 255.f, 0.f});
+        draw_points(y_axis, origin, frame, pvm, {0.f, 0.f, 255.f});
+
         for (const auto &face : faces) {
             for (int i = 0; i < face.size(); ++i) {
-                vec4 point_1 = points[face[i]];
-                vec4 point_2 = points[face[(i + 1) % face.size()]];
-
-//        std::cout << point_1.toString();
-
-                auto pvm = projection * view * model_matrix();
-
-                point_1 = point_1.multiply(pvm);
-                point_2 = point_2.multiply(pvm);
-
-                if (point_1.w() < 0 || point_2.w() < 0) {
-                    break;
-                }
-
-                //    std::cout << std::to_string(point_1.w()) + "\n";
-                //    std::cout << std::to_string(point_2.w()) + "\n";
-
-                float width = 1.f;
-                float height = 1.f;
-
-                if (point_1.w() != 0) {
-                    point_1.x((width / 2.f) + (point_1.x() / point_1.w()) * (width / 2.f));
-                    point_1.y((height / 2.f) + (point_1.y() / point_1.w()) * (height / 2.f));
-                }
-
-                if (point_2.w() != 0) {
-                    point_2.x((width / 2.f) + (point_2.x() / point_2.w()) * (width / 2.f));
-                    point_2.y((height / 2.f) + (point_2.y() / point_2.w()) * (height / 2.f));
-                }
-
-                frame.drawLine(static_cast<int>(point_1.x()), static_cast<int>(point_1.y()),
-                               static_cast<int>(point_2.x()), static_cast<int>(point_2.y()));
+                draw_points(points[face[i]], points[face[(i + 1) % face.size()]], frame, pvm, {255.f, 255.f, 255.f});
             }
         }
-        //   std::cout << "----------\n";
+    }
+
+    void complex_mesh::draw_points(const vec4 &point_a, const vec4 &point_b, ui::sdl::frame &frame, const mat4 &pvm, vec4 color) {
+      auto point_1 = point_a.multiply(pvm);
+      auto point_2 = point_b.multiply(pvm);
+
+      if (point_1.w() < 0 || point_2.w() < 0) {
+        return;
+      }
+
+      float width = 1.f;
+      float height = 1.f;
+
+      if (point_1.w() != 0) {
+        point_1.x((width / 2.f) + (point_1.x() / point_1.w()) * (width / 2.f));
+        point_1.y((height / 2.f) + (point_1.y() / point_1.w()) * (height / 2.f));
+      }
+
+      if (point_2.w() != 0) {
+        point_2.x((width / 2.f) + (point_2.x() / point_2.w()) * (width / 2.f));
+        point_2.y((height / 2.f) + (point_2.y() / point_2.w()) * (height / 2.f));
+      }
+
+      frame.drawLine(static_cast<int>(point_1.x()), static_cast<int>(point_1.y()),
+                     static_cast<int>(point_2.x()), static_cast<int>(point_2.y()), color);
     }
 
     void complex_mesh::multiply(mat4 &other) {

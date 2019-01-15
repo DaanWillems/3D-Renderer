@@ -26,11 +26,14 @@ namespace math {
         vec4& scale();
 
         void multiply(mat4 &other);
-    private:
+
+    protected:
         std::unique_ptr<math::mat4> model_matrix_;
         vec4 location_{0.f, 0.f};
         vec4 rotation_{0.f, 0.f, 0.f};
         vec4 scale_{1.f, 1.f, 1.f};
+
+        void draw_points(const vec4 &point_1, const vec4 &point_2, ui::sdl::frame &frame, const mat4 &pvm, vec4 color);
     };
 }
 

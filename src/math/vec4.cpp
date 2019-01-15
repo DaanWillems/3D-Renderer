@@ -1,8 +1,5 @@
-//
-// Created by Daan on 05/11/2018.
-//
-
 #include <math/vec4.h>
+#include <math/mat4.h>
 #include <iostream>
 #include <cmath>
 
@@ -36,19 +33,19 @@ namespace math {
         data.push_back(w);
     }
 
-    float vec4::x() {
+    float vec4::x() const {
         return data[0];
     }
 
-    float vec4::y() {
+    float vec4::y() const {
         return data[1];
     }
 
-    float vec4::z() {
+    float vec4::z() const {
         return data[2];
     }
 
-    float vec4::w() {
+    float vec4::w() const {
         return data[3];
     }
 
@@ -141,11 +138,7 @@ namespace math {
         return *this;
     }
 
-    void vec4::draw(ui::sdl::frame &frame, math::mat4 projection, math::mat4 view_) {
-        frame.draw_rectangle(static_cast<int>(x() - 3), static_cast<int>(y() + 3), 6, 6);
-    }
-
-    vec4 vec4::multiply(mat4 &matrix) const {
+    vec4 vec4::multiply(const mat4 &matrix) const {
         vec4 new_vector{0.f, 0.f, 0.f, 1.f};
         for (int i = 0; i < matrix.rows; i++) {
             float value = 0;
@@ -154,7 +147,6 @@ namespace math {
             }
             new_vector.data[i] = value;
         }
-//        std::cout << new_vector.toString();
         return new_vector;
     }
 

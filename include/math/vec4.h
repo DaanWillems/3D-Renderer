@@ -5,8 +5,7 @@ namespace math {
 }
 
 #include <ui/renderable.h>
-//#include <ui/sdl/frame.h>
-#include "math/mat4.h"
+//#include "math/mat4.h"
 #include <vector>
 #include <string>
 #include "ui/sdl/frame.h"
@@ -23,17 +22,17 @@ namespace ui {
 }
 
 namespace math {
-class vec4: public ui::renderable {
+class vec4 {
     public:
         vec4();
         vec4(float x, float y);
         vec4(float x, float y, float z);
         vec4(float x, float y, float z, float w);
 
-        float x();
-        float y();
-        float z();
-        float w();
+        float x() const;
+        float y() const;
+        float z() const;
+        float w() const;
 
         void x(float val);
         void y(float val);
@@ -55,7 +54,7 @@ class vec4: public ui::renderable {
         bool operator==(const vec4 other);
         bool operator!=(const vec4 other);
 
-        vec4 multiply(mat4& matrix) const;
+        vec4 multiply(const mat4& matrix) const;
         float dot(const vec4 &other) const;
         vec4 cross(const vec4 &other) const;
         float length() const;
@@ -63,7 +62,6 @@ class vec4: public ui::renderable {
         vec4 truncate(float max);
 
         std::string toString();
-        void draw(ui::sdl::frame& frame, math::mat4 projection, math::mat4 view_) override;
 
         std::vector<float> data;
     };
