@@ -28,7 +28,7 @@ namespace game {
         }
 
         float collision_radius() override {
-          return 20.f;
+          return 10.f * scale().x();
         }
 
     private:
