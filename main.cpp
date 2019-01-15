@@ -202,10 +202,13 @@ int main(int argc, char *argv[]) {
             spaceship.pitch(spaceship.pitch() + turn_speed * delta_time);
         }
         if (input.is_key_pressed(game::key::M)) {
-            cam_rotation_angle += camera_speed * delta_time;
+            cam_rotation_angle += camera_speed*20 * delta_time;
         }
         if (input.is_key_pressed(game::key::N)) {
-            cam_rotation_angle -= camera_speed * delta_time;
+            cam_rotation_angle -= camera_speed*20 * delta_time;
+        }
+        if(input.is_key_pressed(game::key::F3)) {
+            spaceship.rotation({0.f, 0.f, 0.f});
         }
         if (input.is_key_pressed(game::key::TAB)) {
             if (can_toggle_decouple) {
@@ -252,6 +255,26 @@ int main(int argc, char *argv[]) {
             }
         }
 
+        mat4 m1{1.f};
+        mat4 m2{1.f};
+        mat4 m3{1.f};
+        float angle = (cam_rotation_angle * M_PI) / 180;
+        m2.data[0][0] = cos(angle);
+        m2.data[0][2] = sin(angle);
+        m2.data[2][0] = -sin(angle);
+        m2.data[2][2] = cos(angle);
+
+        m1.data[0][3] = -spaceship.location().x();
+        m1.data[1][3] = -spaceship.location().y();
+        m1.data[2][3] = -spaceship.location().z();
+
+        m3.data[0][3] = spaceship.location().x();
+        m3.data[1][3] = spaceship.location().y();
+        m3.data[2][3] = spaceship.location().z();
+
+        auto r1 = m3 * m2 * m1;
+
+        eye = eye.multiply(r1);
         auto camera = math::look_at(eye, lookat, {0, 1, 0});
 
         renderer.view(camera);
