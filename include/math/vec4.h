@@ -69,6 +69,7 @@ class vec4: public ui::renderable {
     };
 
     vec4 normalize(vec4 v);
+    vec4 invert(vec4 v);
     float dist(vec4 v1, vec4 v2);
     vec4 truncate(vec4 v, float max);
 }

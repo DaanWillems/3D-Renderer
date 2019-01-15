@@ -10,6 +10,8 @@ namespace game {
     E,
     H,
     Z,
+    M,
+    N,
     X,
     F3,
     J,
