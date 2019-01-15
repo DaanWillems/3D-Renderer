@@ -177,11 +177,9 @@ int main(int argc, char *argv[]) {
             spaceship.yaw(spaceship.yaw() - (turn_speed * delta_time));
         }
         if (input.is_key_pressed(game::key::W)) {
-            //loc.data[2] += 0.1f;
             spaceship.acceleration(vec4{0.f, 0.f, acceleration * delta_time});
         }
         if (input.is_key_pressed(game::key::S)) {
-            // spaceship.acceleration(spaceship.acceleration() + vec4{0.f, 0.f, -0.001f / 100});
             spaceship.acceleration(vec4{0.f, 0.f, -acceleration * delta_time});
         }
         if (input.is_key_pressed(game::key::Q)) {
@@ -211,62 +209,14 @@ int main(int argc, char *argv[]) {
             can_toggle_decouple = true;
         }
         if (input.is_key_pressed(game::key::SPACE)) {
-
-            auto &loc{spaceship.location()};
-            auto &rot{spaceship.rotation()};
-            if (input.is_key_pressed(game::key::A)) {
-                spaceship.yaw(spaceship.yaw() + turn_speed * delta_time);
+            if (can_shoot) {
+                can_shoot = false;
+                projectiles.push_back(spaceship.shoot(p_id++));
+                scene.renderables.push_back(&projectiles.back());
+                projectiles.back().direction(spaceship_direction);
             }
-            if (input.is_key_pressed(game::key::D)) {
-                spaceship.yaw(spaceship.yaw() - (turn_speed * delta_time));
-            }
-            if (input.is_key_pressed(game::key::W)) {
-                //loc.data[2] += 0.1f;
-                spaceship.acceleration(vec4{0.f, 0.f, acceleration * delta_time});
-            }
-            if (input.is_key_pressed(game::key::S)) {
-                //spaceship.acceleration(spaceship.acceleration() + vec4{0.f, 0.f, -0.001f / 100});
-            }
-            if (input.is_key_pressed(game::key::Q)) {
-                spaceship.roll(spaceship.roll() - turn_speed * delta_time);
-            }
-            if (input.is_key_pressed(game::key::E)) {
-                spaceship.roll(spaceship.roll() + turn_speed * delta_time);
-            }
-            if (input.is_key_pressed(game::key::Z)) {
-                spaceship.pitch(spaceship.pitch() - turn_speed * delta_time);
-            }
-            if (input.is_key_pressed(game::key::X)) {
-                spaceship.pitch(spaceship.pitch() + turn_speed * delta_time);
-            }
-            if (input.is_key_pressed(game::key::M)) {
-                cam_rotation_angle += camera_speed * 20 * delta_time;
-            }
-            if (input.is_key_pressed(game::key::N)) {
-                cam_rotation_angle -= camera_speed * 20 * delta_time;
-            }
-            if (input.is_key_pressed(game::key::F3)) {
-                spaceship.rotation({0.f, 0.f, 0.f});
-            }
-            if (input.is_key_pressed(game::key::TAB)) {
-                if (can_toggle_decouple) {
-                    spaceship.decoupled(!spaceship.decoupled());
-                    can_toggle_decouple = false;
-                }
-            } else {
-                can_toggle_decouple = true;
-            }
-            if (input.is_key_pressed(game::key::SPACE)) {
-
-                if (can_shoot) {
-                    can_shoot = false;
-                    projectiles.push_back(spaceship.shoot(p_id++));
-                    scene.renderables.push_back(&projectiles.back());
-                    projectiles.back().direction(spaceship_direction);
-                }
-            } else {
-                can_shoot = true;
-            }
+        } else {
+            can_shoot = true;
         }
 
         auto p = projectiles.begin();
